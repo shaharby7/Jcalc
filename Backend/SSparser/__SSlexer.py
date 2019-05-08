@@ -10,7 +10,7 @@ import re
 
 tokens = ['THROW'
         ]
-literals = "(),<>|xLR"
+literals = "(),<>|xLR[]"
 
 def t_THROW(t):
     r"[0-9|a-z]x{0,1}"
