@@ -11,11 +11,15 @@ from __SSlexer import tokens
 THROW_TYPE = "throw_type"
 CONTENT = "content"
 
-def create_parenthesis_handler(l_paren_symbol, r_paren_symbol, meaning):
-    def func (p):
-        "throw : {} sequence {}".format(l_paren_symbol, r_paren_symbol)
-        p[0] = {THROW_TYPE:meaning, CONTENT:p[2]}
-    return func
+
+def p_sequence_f_sequence_throw(p):
+    '''sequence : sequence throw
+                | throw'''
+    if len(p)==2:
+        p[0] = [p[1]]
+    elif len (p)==3:
+        p[0] = p[1] + [p[2]]
+
 
 def p_throw(p):
     'throw : THROW'
@@ -23,17 +27,10 @@ def p_throw(p):
     throw.update({THROW_TYPE:"basic throw"})
     p[0] = throw 
 
-def p_sequence_f_throw (p):
-    'sequence : throw'
-    p[0] = [p[1]]
-
-def p_sequence_f_sequence_throw(p):
-    'sequence : sequence throw'
-    p[0] = p[1] + [p[2]]
-
-p_multiplex = create_parenthesis_handler("[","]","multiplex")
-p_synch = create_parenthesis_handler("(",")","synch")
-p_passing = create_parenthesis_handler("<",">","passing")
+def p_spetial_throws(p):
+    'throw : L_PARENTHESIS sequence R_PARENTHESIS'
+    throw_type = "INVALID!"
+    
     
 def p_error(p):
     print (p, "INVALID SYNTAX!")

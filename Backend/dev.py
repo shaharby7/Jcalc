@@ -6,6 +6,11 @@ Created on Tue May  7 22:43:00 2019
 """
 
 
-from tests.test_SSparser import TestSSparser
-import unittest
-unittest.main()
+#from tests.test_SSparser import TestSSparser
+#import unittest
+#unittest.main()
+
+from SSparser.throwToken import throwToken
+
+a = throwToken()
+print a.throw_type

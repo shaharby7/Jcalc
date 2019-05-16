@@ -9,6 +9,13 @@ import unittest
 from SSparser.__SSlexer import lexer
 from SSparser import SSparser
 import logging
+import os
+
+try:
+    os.remove("parselog.txt")
+except:
+    logging.shutdown()
+    
 
 logging.basicConfig(
     level = logging.DEBUG,
@@ -31,4 +38,6 @@ class TestSSparser(unittest.TestCase):
         #print tokens
     
     def test_parser(self):
-        print SSparser.parse("12", debug=log)
+        print SSparser.parse("12(34)", debug=log)
+
+logging.shutdown()

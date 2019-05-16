@@ -1,0 +1,21 @@
+{
+    "THROW_TYPES":[{
+            "L_PAREN":"(",
+            "R_PAREN":")",
+            "TYPE":"sync",
+            "PRCEDENCE":1
+        },
+        {
+            "L_PAREN":"[",
+            "R_PAREN":"]",
+            "TYPE":"multyplex",
+            "PRCEDENCE":0
+        },
+        {
+            "L_PAREN":"<",
+            "R_PAREN":">",
+            "TYPE":"passing",
+            "PRCEDENCE":2
+        }
+    ]
+}
