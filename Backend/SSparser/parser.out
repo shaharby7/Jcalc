@@ -1,0 +1,49 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> throw
+Rule 1     throw -> THROW
+Rule 2     pattern -> pattern throw
+
+Terminals, with rules where they appear
+
+THROW                : 1
+error                : 
+
+Nonterminals, with rules where they appear
+
+pattern              : 2
+throw                : 2 0
+
+         : 1
+error                : 
+
+Nonterminals, with rules where they appear
+
+sequence             : 3
+throw                : 2 3 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . throw
+    (1) throw -> . THROW
+
+    THROW           shift and go to state 2
+
+    throw                          shift and go to state 1
+
+state 1
+
+    (0) S' -> throw .
+
+
+
+state 2
+
+    (1) throw -> THROW .
+
+    $end            reduce using rule 1 (throw -> THROW .)
+

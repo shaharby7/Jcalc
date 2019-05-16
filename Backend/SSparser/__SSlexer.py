@@ -8,9 +8,18 @@ Created on Tue May  7 20:40:12 2019
 from ply import lex
 import re
 
-tokens = ['THROW'
-        ]
-literals = "(),<>|xLR[]"
+tokens = ['THROW',
+          'L_PARENTHESIS',
+          'R_PARENTHESIS'
+         ]
+
+literals = "LR"
+
+t_ignore =" \t|,"
+
+t_L_PARENTHESIS = r"\(|\[|\<"
+
+t_R_PARENTHESIS = r"\)|\]|\>"
 
 def t_THROW(t):
     r"[0-9|a-z]x{0,1}"
@@ -22,7 +31,7 @@ def t_THROW(t):
         beats_number = int(beats_char)
     else:
         beats_number = ord(beats_char)- 96 +9
-    t.value = (beats_number, crossed)
+    t.value = {"beats_number":beats_number, "crossed": crossed}
     return t
 
 def t_error(t):
