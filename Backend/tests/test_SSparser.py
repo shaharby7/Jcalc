@@ -23,21 +23,22 @@ logging.basicConfig(
     filemode = "w",
     format = "%(filename)10s:%(lineno)4d:%(message)s"
 )
+
 log = logging.getLogger()
 
 class TestSSparser(unittest.TestCase):
         
     def test_lexer(self):
-        lexer.input("12x<a")
+        lexer.input(" 12\t3x<a([")
         tokens = []
         while True:
             tok = lexer.token()
             if not tok:
                 break
             tokens.append(tok)
-        #print tokens
+#        print tokens
     
     def test_parser(self):
-        print SSparser.parse("12(34)", debug=log)
+        print SSparser.parse("1(2)34", debug=log)
 
 logging.shutdown()

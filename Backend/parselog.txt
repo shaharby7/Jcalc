@@ -1,73 +1,41 @@
    yacc.py: 362:PLY: PARSE DEBUG START
    yacc.py: 410:
    yacc.py: 411:State  : 0
-   yacc.py: 435:Stack  : . LexToken(THROW,{'crossed': False, 'beats_number': 1},1,0)
-   yacc.py: 445:Action : Shift and goto state 1
-   yacc.py: 410:
-   yacc.py: 411:State  : 1
-   yacc.py: 435:Stack  : THROW . LexToken(THROW,{'crossed': False, 'beats_number': 2},1,1)
-   yacc.py: 471:Action : Reduce rule [throw -> THROW] with [<dict @ 0x9f776a8>] and goto state 2
-   yacc.py: 506:Result : <dict @ 0xad838c8> ({'crossed': False, 'beats_number': 1, 't ...)
+   yacc.py: 435:Stack  : . LexToken(THROW,throwToken(beats_number=1,throw_type=base_throw),1,0)
+   yacc.py: 445:Action : Shift and goto state 2
    yacc.py: 410:
    yacc.py: 411:State  : 2
-   yacc.py: 435:Stack  : throw . LexToken(THROW,{'crossed': False, 'beats_number': 2},1,1)
-   yacc.py: 471:Action : Reduce rule [sequence -> throw] with [<dict @ 0xad838c8>] and goto state 3
-   yacc.py: 506:Result : <list @ 0xae0ae88> ([{'crossed': False, 'beats_number': 1, ' ...)
+   yacc.py: 435:Stack  : THROW . LexToken(L_PARENTHESIS,'(',1,1)
+   yacc.py: 471:Action : Reduce rule [throw -> THROW] with [<throwToken @ 0xb8d6358>] and goto state 3
+   yacc.py: 506:Result : <throwToken @ 0xb8d6390> (throwToken(beats_number=1,throw_type=bas ...)
    yacc.py: 410:
    yacc.py: 411:State  : 3
-   yacc.py: 435:Stack  : sequence . LexToken(THROW,{'crossed': False, 'beats_number': 2},1,1)
+   yacc.py: 435:Stack  : throw . LexToken(L_PARENTHESIS,'(',1,1)
+   yacc.py: 471:Action : Reduce rule [sequence -> throw] with [<throwToken @ 0xb8d6390>] and goto state 4
+   yacc.py: 506:Result : <list @ 0xb478bc8> ([throwToken(beats_number=1,throw_type=ba ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 4
+   yacc.py: 435:Stack  : sequence . LexToken(L_PARENTHESIS,'(',1,1)
    yacc.py: 445:Action : Shift and goto state 1
    yacc.py: 410:
    yacc.py: 411:State  : 1
-   yacc.py: 435:Stack  : sequence THROW . LexToken(L_PARENTHESIS,'(',1,2)
-   yacc.py: 580:Error  : sequence THROW . LexToken(L_PARENTHESIS,'(',1,2)
-   yacc.py: 410:
-   yacc.py: 411:State  : 1
-   yacc.py: 435:Stack  : sequence THROW . error
-   yacc.py: 580:Error  : sequence THROW . error
-   yacc.py: 410:
-   yacc.py: 411:State  : 3
-   yacc.py: 435:Stack  : sequence . error
-   yacc.py: 580:Error  : sequence . error
-   yacc.py: 410:
-   yacc.py: 411:State  : 0
-   yacc.py: 435:Stack  : . error
-   yacc.py: 580:Error  : . error
-   yacc.py: 410:
-   yacc.py: 411:State  : 0
-   yacc.py: 435:Stack  : . LexToken(THROW,{'crossed': False, 'beats_number': 3},1,3)
-   yacc.py: 445:Action : Shift and goto state 1
-   yacc.py: 410:
-   yacc.py: 411:State  : 1
-   yacc.py: 435:Stack  : THROW . LexToken(THROW,{'crossed': False, 'beats_number': 4},1,4)
-   yacc.py: 471:Action : Reduce rule [throw -> THROW] with [<dict @ 0xac7c6a8>] and goto state 2
-   yacc.py: 506:Result : <dict @ 0x9e528c8> ({'crossed': False, 'beats_number': 3, 't ...)
+   yacc.py: 435:Stack  : sequence L_PARENTHESIS . LexToken(THROW,throwToken(beats_number=2,throw_type=base_throw),1,2)
+   yacc.py: 445:Action : Shift and goto state 2
    yacc.py: 410:
    yacc.py: 411:State  : 2
-   yacc.py: 435:Stack  : throw . LexToken(THROW,{'crossed': False, 'beats_number': 4},1,4)
-   yacc.py: 471:Action : Reduce rule [sequence -> throw] with [<dict @ 0x9e528c8>] and goto state 3
-   yacc.py: 506:Result : <list @ 0x9f93cc8> ([{'crossed': False, 'beats_number': 3, ' ...)
+   yacc.py: 435:Stack  : sequence L_PARENTHESIS THROW . LexToken(R_PARENTHESIS,')',1,3)
+   yacc.py: 471:Action : Reduce rule [throw -> THROW] with [<throwToken @ 0xb8d6518>] and goto state 3
+   yacc.py: 506:Result : <throwToken @ 0xb8d6358> (throwToken(beats_number=2,throw_type=bas ...)
    yacc.py: 410:
    yacc.py: 411:State  : 3
-   yacc.py: 435:Stack  : sequence . LexToken(THROW,{'crossed': False, 'beats_number': 4},1,4)
-   yacc.py: 445:Action : Shift and goto state 1
+   yacc.py: 435:Stack  : sequence L_PARENTHESIS throw . LexToken(R_PARENTHESIS,')',1,3)
+   yacc.py: 471:Action : Reduce rule [sequence -> throw] with [<throwToken @ 0xb8d6358>] and goto state 5
+   yacc.py: 506:Result : <list @ 0xb620148> ([throwToken(beats_number=2,throw_type=ba ...)
    yacc.py: 410:
-   yacc.py: 411:State  : 1
-   yacc.py: 435:Stack  : sequence THROW . LexToken(R_PARENTHESIS,')',1,5)
-   yacc.py: 580:Error  : sequence THROW . LexToken(R_PARENTHESIS,')',1,5)
+   yacc.py: 411:State  : 5
+   yacc.py: 435:Stack  : sequence L_PARENTHESIS sequence . LexToken(R_PARENTHESIS,')',1,3)
+   yacc.py: 445:Action : Shift and goto state 7
    yacc.py: 410:
-   yacc.py: 411:State  : 1
-   yacc.py: 435:Stack  : sequence THROW . error
-   yacc.py: 580:Error  : sequence THROW . error
-   yacc.py: 410:
-   yacc.py: 411:State  : 3
-   yacc.py: 435:Stack  : sequence . error
-   yacc.py: 580:Error  : sequence . error
-   yacc.py: 410:
-   yacc.py: 411:State  : 0
-   yacc.py: 435:Stack  : . error
-   yacc.py: 580:Error  : . error
-   yacc.py: 410:
-   yacc.py: 411:State  : 0
-   yacc.py: 435:Stack  : . $end
-   yacc.py: 580:Error  : . $end
+   yacc.py: 411:State  : 7
+   yacc.py: 435:Stack  : sequence L_PARENTHESIS sequence R_PARENTHESIS . LexToken(THROW,throwToken(beats_number=3,throw_type=base_throw),1,4)
+   yacc.py: 471:Action : Reduce rule [throw -> L_PARENTHESIS sequence R_PARENTHESIS] with ['(',<list @ 0xb620148>,')'] and goto state 6

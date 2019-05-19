@@ -10,7 +10,6 @@ Created on Tue May  7 22:43:00 2019
 #import unittest
 #unittest.main()
 
-from SSparser.throwToken import throwToken
+from SSparser import SSparser
 
-a = throwToken()
-print a.throw_type
+SSparser.parse("12(3)")

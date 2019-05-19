@@ -11,5 +11,5 @@ def read_config(config_name):
     path = os.path.join("configs",config_name+".json")
     with open (path,"r") as file:
         content = file.read()
-        configuration = json.dumps(content)
+        configuration = json.loads(content)
     return configuration

@@ -1,23 +1,27 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
+Unused terminals:
+
+    L_PARENTHESIS
+    R_PARENTHESIS
+
 Grammar
 
 Rule 0     S' -> sequence
 Rule 1     sequence -> sequence throw
 Rule 2     sequence -> throw
 Rule 3     throw -> THROW
-Rule 4     throw -> L_PARENTHESIS sequence R_PARENTHESIS
 
 Terminals, with rules where they appear
 
-L_PARENTHESIS        : 4
-R_PARENTHESIS        : 4
+L_PARENTHESIS        : 
+R_PARENTHESIS        : 
 THROW                : 3
 error                : 
 
 Nonterminals, with rules where they appear
 
-sequence             : 1 4 0
+sequence             : 1 0
 throw                : 1 2
 
 Parsing method: LALR
@@ -28,89 +32,42 @@ state 0
     (1) sequence -> . sequence throw
     (2) sequence -> . throw
     (3) throw -> . THROW
-    (4) throw -> . L_PARENTHESIS sequence R_PARENTHESIS
 
-    THROW           shift and go to state 2
-    L_PARENTHESIS   shift and go to state 1
+    THROW           shift and go to state 1
 
-    throw                          shift and go to state 3
-    sequence                       shift and go to state 4
+    throw                          shift and go to state 2
+    sequence                       shift and go to state 3
 
 state 1
-
-    (4) throw -> L_PARENTHESIS . sequence R_PARENTHESIS
-    (1) sequence -> . sequence throw
-    (2) sequence -> . throw
-    (3) throw -> . THROW
-    (4) throw -> . L_PARENTHESIS sequence R_PARENTHESIS
-
-    THROW           shift and go to state 2
-    L_PARENTHESIS   shift and go to state 1
-
-    throw                          shift and go to state 3
-    sequence                       shift and go to state 5
-
-state 2
 
     (3) throw -> THROW .
 
     THROW           reduce using rule 3 (throw -> THROW .)
-    L_PARENTHESIS   reduce using rule 3 (throw -> THROW .)
     $end            reduce using rule 3 (throw -> THROW .)
-    R_PARENTHESIS   reduce using rule 3 (throw -> THROW .)
 
 
-state 3
+state 2
 
     (2) sequence -> throw .
 
     THROW           reduce using rule 2 (sequence -> throw .)
-    L_PARENTHESIS   reduce using rule 2 (sequence -> throw .)
     $end            reduce using rule 2 (sequence -> throw .)
-    R_PARENTHESIS   reduce using rule 2 (sequence -> throw .)
 
 
-state 4
+state 3
 
     (0) S' -> sequence .
     (1) sequence -> sequence . throw
     (3) throw -> . THROW
-    (4) throw -> . L_PARENTHESIS sequence R_PARENTHESIS
 
-    THROW           shift and go to state 2
-    L_PARENTHESIS   shift and go to state 1
+    THROW           shift and go to state 1
 
-    throw                          shift and go to state 6
+    throw                          shift and go to state 4
 
-state 5
-
-    (4) throw -> L_PARENTHESIS sequence . R_PARENTHESIS
-    (1) sequence -> sequence . throw
-    (3) throw -> . THROW
-    (4) throw -> . L_PARENTHESIS sequence R_PARENTHESIS
-
-    R_PARENTHESIS   shift and go to state 7
-    THROW           shift and go to state 2
-    L_PARENTHESIS   shift and go to state 1
-
-    throw                          shift and go to state 6
-
-state 6
+state 4
 
     (1) sequence -> sequence throw .
 
     THROW           reduce using rule 1 (sequence -> sequence throw .)
-    L_PARENTHESIS   reduce using rule 1 (sequence -> sequence throw .)
     $end            reduce using rule 1 (sequence -> sequence throw .)
-    R_PARENTHESIS   reduce using rule 1 (sequence -> sequence throw .)
-
-
-state 7
-
-    (4) throw -> L_PARENTHESIS sequence R_PARENTHESIS .
-
-    THROW           reduce using rule 4 (throw -> L_PARENTHESIS sequence R_PARENTHESIS .)
-    L_PARENTHESIS   reduce using rule 4 (throw -> L_PARENTHESIS sequence R_PARENTHESIS .)
-    $end            reduce using rule 4 (throw -> L_PARENTHESIS sequence R_PARENTHESIS .)
-    R_PARENTHESIS   reduce using rule 4 (throw -> L_PARENTHESIS sequence R_PARENTHESIS .)
 

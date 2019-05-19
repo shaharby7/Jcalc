@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'L_PARENTHESIS R_PARENTHESIS THROWsequence : sequence throw\n                | throwthrow : THROWthrow : L_PARENTHESIS sequence R_PARENTHESIS'
+_lr_signature = 'L_PARENTHESIS R_PARENTHESIS THROWsequence : sequence throw\n                | throwthrow : THROW'
     
-_lr_action_items = {'L_PARENTHESIS':([0,1,2,3,4,5,6,7,],[1,1,-3,-2,1,1,-1,-4,]),'R_PARENTHESIS':([2,3,5,6,7,],[-3,-2,7,-1,-4,]),'THROW':([0,1,2,3,4,5,6,7,],[2,2,-3,-2,2,2,-1,-4,]),'$end':([2,3,4,6,7,],[-3,-2,0,-1,-4,]),}
+_lr_action_items = {'THROW':([0,1,2,3,4,],[1,-3,-2,1,-1,]),'$end':([1,2,3,4,],[-3,-2,0,-1,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'throw':([0,1,4,5,],[3,3,6,6,]),'sequence':([0,1,],[4,5,]),}
+_lr_goto_items = {'throw':([0,3,],[2,4,]),'sequence':([0,],[3,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,8 +27,7 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> sequence","S'",1,None,None,None),
-  ('sequence -> sequence throw','sequence',2,'p_sequence_f_sequence_throw','__SSparser.py',16),
-  ('sequence -> throw','sequence',1,'p_sequence_f_sequence_throw','__SSparser.py',17),
-  ('throw -> THROW','throw',1,'p_throw','__SSparser.py',25),
-  ('throw -> L_PARENTHESIS sequence R_PARENTHESIS','throw',3,'p_spetial_throws','__SSparser.py',31),
+  ('sequence -> sequence throw','sequence',2,'p_sequence_f_sequence_throw','__SSparser.py',19),
+  ('sequence -> throw','sequence',1,'p_sequence_f_sequence_throw','__SSparser.py',20),
+  ('throw -> THROW','throw',1,'p_throw_THROW','__SSparser.py',28),
 ]
