@@ -1,22 +1,22 @@
 {  
    "THROW_TYPES":[  
       {  
-         "L_PAREN":"\\(",
-         "R_PAREN":"\\)",
+         "L_PAREN":"(",
+         "R_PAREN":")",
          "SEP":",",
          "TYPE":"sync",
          "PRCEDENCE":1
       },
       {  
-         "L_PAREN":"\\[",
-         "R_PAREN":"\\]",
+         "L_PAREN":"[",
+         "R_PAREN":"]",
          "SEP":"",
          "TYPE":"multyplex",
          "PRCEDENCE":0
       },
       {  
-         "L_PAREN":"\\<",
-         "R_PAREN":"\\>",
+         "L_PAREN":"<",
+         "R_PAREN":">",
          "SEP":"|",
          "TYPE":"passing",
          "PRCEDENCE":2

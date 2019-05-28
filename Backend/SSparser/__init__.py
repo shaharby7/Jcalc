@@ -1,1 +1,1 @@
-from __SSparser import SSparser
+from .__SSparser import SSparser

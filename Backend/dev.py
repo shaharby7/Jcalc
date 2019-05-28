@@ -6,10 +6,7 @@ Created on Tue May  7 22:43:00 2019
 """
 
 
-#from tests.test_SSparser import TestSSparser
-#import unittest
-#unittest.main()
+from tests.test_BasicJuggling import TestBasicJuggling
+import unittest
 
-from SSparser import SSparser
-
-SSparser.parse("12(3)")
+unittest.main()

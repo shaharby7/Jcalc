@@ -33,12 +33,13 @@ class TestSSparser(unittest.TestCase):
         tokens = []
         while True:
             tok = lexer.token()
-            if not tok:
+            if not tok: 
                 break
             tokens.append(tok)
 #        print tokens
     
     def test_parser(self):
-        print SSparser.parse("1(2)34", debug=log)
+        parsed = SSparser.parse("1(2)34", debug=log)
+        print (parsed)
 
 logging.shutdown()
