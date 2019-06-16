@@ -6,8 +6,8 @@ Created on Tue May  7 22:17:10 2019
 """
 
 import unittest
-from SSparser.__SSlexer import lexer
-from SSparser import SSparser
+from Juggling.SSparser import lexer
+from Juggling.SSparser import SSparser
 import logging
 import os
 
