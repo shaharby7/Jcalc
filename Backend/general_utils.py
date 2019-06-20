@@ -8,6 +8,10 @@ import json
 import os
 
 
+def get_real_directory():
+    return os.path.dirname(os.path.realpath(__file__))
+
+
 def read_config(config_name):
     path = os.path.join("configs", config_name + ".json")
     with open(path, "r") as file:

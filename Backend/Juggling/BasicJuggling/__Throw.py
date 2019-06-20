@@ -33,7 +33,7 @@ class Throw(object):
             self.dst_hand = swap_hands(thrower_hand)
 
     def define_dst_juggler(self, token, thrower, jugglers_amount):
-        if not thrower:
+        if thrower is None:
             self.dst_juggler = 0
         elif not token.is_pass:
             self.dst_juggler = thrower
