@@ -2,3 +2,5 @@ venv/
 *.pyc
 Backend/.idea/
 Backend/__pycache__/
+Client/.idea/
+Client/node_modules/
