@@ -6,5 +6,7 @@ Created on Mon May  6 22:43:05 2019
 """
 
 
-def bla():
-    print("bla")
+from app import main
+
+if __name__ == '__main__':
+    main()
