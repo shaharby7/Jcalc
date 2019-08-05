@@ -4,3 +4,6 @@ Backend/.idea/
 Backend/__pycache__/
 Client/.idea/
 Client/node_modules/
+Client/package.json
+Client/package-lock.json
+Client/dist/bundlefile.js

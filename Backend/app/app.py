@@ -1,6 +1,6 @@
 from flask import Flask, Blueprint
 from flask_session import Session
-from flask_cors import CORS, cross_origin
+# from flask_cors import CORS, cross_origin
 import os
 
 from app import settings
@@ -9,13 +9,7 @@ from app.api import api, juggling_namespace
 app = Flask(__name__)
 app.secret_key = "Hi there"
 Session(app)
-CORS(app)
-
-
-@app.route("/", methods=["GET"])
-@cross_origin()
-def alive():
-    return "Don't touch me"
+# CORS(app)
 
 
 def configure_app(flask_app):
