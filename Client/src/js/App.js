@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
-import DebuggerPage from './componenets/pages/DebuggerPage/DebuggerPage.js'
+import AnalayzerPage from './componenets/pages/AnalazerPage/AnalayzerPage.js'
 
 export default class App extends Component {
     render() {
-        const a = 1;
         return <div>
-            <h1>hello world</h1>
-            <br />
+            <AnalayzerPage/>
         </div>;
     }
 }

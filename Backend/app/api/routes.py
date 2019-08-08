@@ -8,7 +8,7 @@ from Juggling.BasicJuggling import Pattern
 juggling_namespace = api.namespace('juggling', description='All Juggling calculations')
 
 
-@juggling_namespace.route("/debugger", methods=["POST"])
+@juggling_namespace.route("/analyzer", methods=["POST"])
 class PattenCollection(Resource):
     @api.doc(parser=pattern_request_parser)
     @api.marshal_with(pattern_model)

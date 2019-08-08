@@ -4,19 +4,26 @@ import path from 'path';
 
 // TODO: Move configuration to backend
 
-backendConfig = {
-    "base_url": "http://localhost:8081/juggling",
+const backendConfig = {
+    "protocol": "http",
+    "hostname": "localhost",
+    "port": 8081,
     "routes": {
-        "debugger": "debugger"
+        "analyzer": "juggling/analyzer"
     }
 }
 
-getBackendUrl = (requiredSerice) => {
-    return path.join(backendConfig.base_url, backendConfig.routes[requiredSerice]);
+axios.defaults.port = backendConfig.port;
+
+const baseBackendUrl = backendConfig.protocol
+    + '://' + backendConfig.hostname
+    + ':' + backendConfig.port;
+
+const getFullUrlPath = (requiredPath) => {
+    return baseBackendUrl + "/" + backendConfig.routes[requiredPath];
 }
 
-debggerService = async (siteswap) => {
-    const url = getBackendUrl("debugger");
-    const response = await axios.post(url = url, json = { "siteswap": siteswap })
-    return response
+export const analyzeService = (siteswap) => {
+    const path = getFullUrlPath("analyzer");
+    return axios.post(path, { "siteswap": siteswap })
 }
