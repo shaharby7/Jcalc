@@ -1,5 +1,5 @@
-from ..meta_functions import declare_new_pattern_validator
-from ..PatternProblem import PatternProblem
+from ..__meta_functions import declare_new_pattern_validator
+from ..__PatternProblem import PatternProblem
 
 MESSAGE_TEMPLATE = """Pattern is not consistent in jugglers amount.
  First beat designated for {first_beat} jugglers while beat {problematic_beat} is for {problematic_number}"""

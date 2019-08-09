@@ -33,7 +33,7 @@ export default function AnalayzerPageForm(props) {
 
     const onSubmit = () => {
         props.updatePattern(siteswap);
-        setSiteswap("");
+        // setSiteswap("");
     }
 
     return <form className={classes.container} noValidate autoComplete="off">

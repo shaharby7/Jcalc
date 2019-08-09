@@ -8,7 +8,7 @@ Created on Fri May 10 16:05:54 2019
 from Juggling.SSparser import SSparser
 from .__Beat import Beat
 from general_utils import swap_hands
-from ..JugglingDebugger import debug_pattern
+from ..JugglingDebugger import debug_pattern, PatternProblem
 
 from copy import deepcopy
 
@@ -21,13 +21,22 @@ class Pattern(object):
         self._current_hands_state = ["R"]
         self.siteswap = siteswap
         self.beatmap = []
-        self._set_beatmap()
-        self.highest_throw = self._get_highest_throw()
-        self._set_catches_to_all_beats()
-        self.problems = debug_pattern(self)
+        self.problems = []
+        self.highest_throw = None
+        self.__initiate_pattern_data()
 
-    def _set_beatmap(self):
-        tokens_tree = SSparser.parse(self.siteswap)
+    def __initiate_pattern_data(self):
+        try:
+            tokens_tree = SSparser.parse(self.siteswap)
+        except Exception as e:
+            self.problems = [PatternProblem(message=repr(e), problematic_beat=-1, kind="parsing_error")]
+        else:
+            self._set_beatmap(tokens_tree)
+            self.highest_throw = self._get_highest_throw()
+            self._set_catches_to_all_beats()
+            self.problems = debug_pattern(self)
+
+    def _set_beatmap(self, tokens_tree):
         while len(self.beatmap) == 0 or len(self.beatmap) % HANDS_FOR_JUGGLER:
             for throw in tokens_tree:
                 self._add_throw(throw)

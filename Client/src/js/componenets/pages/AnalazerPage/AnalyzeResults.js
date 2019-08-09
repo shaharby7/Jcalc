@@ -24,25 +24,26 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const getMessgeAvatar = (messageType) => {
-    const imagePath = `/public/${messageType}.png`;
+const getMessgeAvatar = (problemKind) => {
+    let imagePath = `/public/generic_problem.png`;
+    if (problemKind == 'parsing_error') {
+        imagePath = `/public/parsing_error.png`
+    }
     return <Avatar
         alt="Remy Sharp"
         src={imagePath}
-        // className={classes.avatar}
     />;
 }
 
 
-const genarateResultItem = (message) => {
-    const messageType = message[0];
-    const messageText = message[1]
-    return <ListItem key={messageText}>
+const genarateResultItem = (problem) => {
+    return <ListItem key={problem.message}>
         <ListItemAvatar>
-            {getMessgeAvatar(messageType)}
+            {getMessgeAvatar(problem.kind)}
         </ListItemAvatar>
         <ListItemText
-            primary={messageText}
+            primary={`Beat number: ${problem.problematic_beat}`}
+            secondary={problem.message}
         />
     </ListItem>
 }
@@ -50,22 +51,38 @@ const genarateResultItem = (message) => {
 export default function AnalyzeResults(props) {
     const classes = useStyles();
 
-    return (
-        <div className={classes.root}>
-            <Grid container spacing={2}>
-                <Grid item xs={12} md={6}>
-                    <Typography variant="h6" className={classes.title}>
-                        Anatilze Results:
-            </Typography>
-                    <div className={classes.demo}>
-                        <List>
-                            {props.messages.map(
-                                genarateResultItem
-                            )}
-                        </List>
-                    </div>
+    const renderProblems = () => {
+        return (
+            <div className={classes.root}>
+                <Grid container spacing={2}>
+                    <Grid item xs={12} md={6}>
+                        <Typography variant="h6" className={classes.title}>
+                            {`Anatilze Results for siteswap: ${props.pattern.siteswap}`}
+                        </Typography>
+                        <div className={classes.demo}>
+                            <List>
+                                {props.pattern.problems.map(
+                                    genarateResultItem
+                                )}
+                            </List>
+                        </div>
+                    </Grid>
                 </Grid>
-            </Grid>
+            </div>
+        );
+    }
+
+    const renderSuccess = () => {
+        return <div>
+            <Typography variant="h6" className={classes.title}>
+                {`The siteswap ${props.pattern.siteswap} is great!`}
+            </Typography>
+            <Avatar
+                alt="Remy Sharp"
+                src="/public/success.png"
+            />
         </div>
-    );
+    }
+
+    return props.pattern.problems.length > 0 ? renderProblems() : renderSuccess();
 }

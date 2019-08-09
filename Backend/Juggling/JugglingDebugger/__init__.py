@@ -1,3 +1,4 @@
 from .validators import *
 
-from .meta_functions import debug_pattern
+from .__meta_functions import debug_pattern
+from .__PatternProblem import PatternProblem

@@ -1,5 +1,5 @@
-from Juggling.JugglingDebugger.meta_functions import declare_new_pattern_validator, debug_pattern
-from Juggling.JugglingDebugger.PatternProblem import PatternProblem
+from Juggling.JugglingDebugger.__meta_functions import declare_new_pattern_validator, debug_pattern
+from Juggling.JugglingDebugger.__PatternProblem import PatternProblem
 from Juggling.BasicJuggling import Pattern
 
 import unittest

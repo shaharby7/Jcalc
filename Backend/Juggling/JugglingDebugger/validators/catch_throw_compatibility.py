@@ -1,9 +1,13 @@
-from ..meta_functions import declare_new_pattern_validator
-from ..PatternProblem import PatternProblem
+from ..__meta_functions import declare_new_pattern_validator
+from ..__PatternProblem import PatternProblem
 from collections import Counter
 
-PROBLEM_MESSAGE_TEMPLATE = """Hand {hand_id} doesn't have same amount of catches and throws.
+PROBLEM_MESSAGE_TEMPLATE = """Hand {hand_side} doesn't have same amount of catches and throws.
 {number_of_more} {kind_of_more}, and only {number_of_less} {kind_of_less}."""
+
+PROBLEM_MESSAGE_MULTIPLE_JUGGLERS_TEMPLATE = """Hand {hand_side} of Juggler number {juggler_number} doesn't have same amount of catches and throws.
+{number_of_more} {kind_of_more}, and only {number_of_less} {kind_of_less}."""
+
 CATCHES = "catches"
 THROWS = "throws"
 
@@ -24,7 +28,7 @@ def _validate_beat(beat, beat_index):
     catches_for_hand = _get_number_of_throws_or_catches_for_hand(beat, throw_or_catch=CATCHES)
     all_involved_hands = set(throws_for_hand + catches_for_hand)
     for hand in all_involved_hands:
-        problem_at_hand = _validate_beat_for_hand(beat_index, hand,
+        problem_at_hand = _validate_beat_for_hand(beat_index, hand, beat.jugglers_amount,
                                                   throws_for_hand.get(hand, 0),
                                                   catches_for_hand.get(hand, 0))
         if problem_at_hand:
@@ -41,27 +45,31 @@ def _get_number_of_throws_or_catches_for_hand(beat, throw_or_catch):
     return Counter(relevant_list)
 
 
-def _validate_beat_for_hand(beat_index, hand,
+def _validate_beat_for_hand(beat_index, hand, jugglers_amount,
                             throws_amount,
                             catches_amount):
     if throws_amount == catches_amount:
         return None
-    problem_message = _create_message(catches_amount, throws_amount, hand_id=hand)
+    problem_message = _create_message(catches_amount, throws_amount, hand, jugglers_amount)
     return PatternProblem(message=problem_message, problematic_beat=beat_index)
 
 
-def _create_message(catches_amount, throws_amount, hand_id):
+def _create_message(catches_amount, throws_amount, hand, jugglers_amount):
+    if jugglers_amount >= 2:
+        relevant_template = PROBLEM_MESSAGE_MULTIPLE_JUGGLERS_TEMPLATE
+    else:
+        relevant_template = PROBLEM_MESSAGE_TEMPLATE
     if catches_amount > throws_amount:
-        return PROBLEM_MESSAGE_TEMPLATE.format(number_of_more=catches_amount,
-                                               kind_of_more=CATCHES,
-                                               number_of_less=throws_amount,
-                                               kind_of_less=THROWS,
-                                               hand_id=hand_id)
+        return relevant_template.format(number_of_more=catches_amount,
+                                        kind_of_more=CATCHES,
+                                        number_of_less=throws_amount,
+                                        kind_of_less=THROWS,
+                                        hand_side=hand.side,
+                                        juggler_number=hand.juggler)
 
-    return PROBLEM_MESSAGE_TEMPLATE.format(number_of_more=catches_amount,
-                                           kind_of_more=CATCHES,
-                                           number_of_less=throws_amount,
-                                           kind_of_less=THROWS,
-                                           hand_id=hand_id)
-
-def _create_message
+    return relevant_template.format(number_of_more=catches_amount,
+                                    kind_of_more=CATCHES,
+                                    number_of_less=throws_amount,
+                                    kind_of_less=THROWS,
+                                    hand_side=hand.side,
+                                    juggler_number=hand.juggler)

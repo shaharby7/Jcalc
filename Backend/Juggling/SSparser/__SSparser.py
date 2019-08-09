@@ -44,7 +44,7 @@ def p_spetial_throws(p):
 
 
 def p_error(p):
-    print(p, "INVALID SYNTAX!")
+    raise Exception("Parsing error")
 
 
 SSparser = yacc.yacc(debug=True)

@@ -12,35 +12,55 @@ class Throw(object):
 
     def __init__(self, token, thrower_hand, thrower, jugglers_amount):
         assert token.throw_type == "base_throw"
-        self.src_juggler = thrower if thrower else 0
-        self.src_hand = thrower_hand[0]
-        self.src_unique = Throw.create_unique(self.src_juggler, self.src_hand)
-        self.dst_juggler = None
-        self.dst_hand = None
-        self.define_dst(token, thrower_hand, thrower, jugglers_amount)
-        self.dst_unique = Throw.create_unique(self.dst_juggler, self.dst_hand)
+        self.src_unique = UniqueHand(juggler=(thrower if thrower else 0),
+                                     hand=(thrower_hand[0]))
+        self.dst_unique = None
+        self.__define_dst(token, thrower_hand, thrower, jugglers_amount)
         self.beats = token.beats_number
 
-    def define_dst(self, token, thrower_hand, thrower, jugglers_amount):
-        self.define_dst_hand(token, thrower_hand)
-        self.define_dst_juggler(token, thrower, jugglers_amount)
+    def __define_dst(self, token, thrower_hand, thrower, jugglers_amount):
+        dst_hand = Throw.calculate_dst_hand(token, thrower_hand)
+        dst_juggling = Throw.calculate_dst_juggler(token, thrower, jugglers_amount)
+        self.dst_unique = UniqueHand(hand=dst_hand, juggler=dst_juggling)
 
-    def define_dst_hand(self, token, thrower_hand):
+    @staticmethod
+    def calculate_dst_hand(token, thrower_hand):
         is_even_number_of_beats = (token.beats_number + 1) % 2
         if xor(is_even_number_of_beats, token.crossed):
-            self.dst_hand = thrower_hand
+            dst_hand = thrower_hand
         else:
-            self.dst_hand = swap_hands(thrower_hand)
+            dst_hand = swap_hands(thrower_hand)
+        return dst_hand
 
-    def define_dst_juggler(self, token, thrower, jugglers_amount):
+    @staticmethod
+    def calculate_dst_juggler(token, thrower, jugglers_amount):
         if thrower is None:
-            self.dst_juggler = 0
+            dst_juggler = 0
         elif not token.is_pass:
-            self.dst_juggler = thrower
+            dst_juggler = thrower
         elif token.pass_to:
-            self.dst_juggler = token.pass_to
+            dst_juggler = token.pass_to
         else:
-            self.dst_juggler = (thrower + 1) % jugglers_amount
+            dst_juggler = (thrower + 1) % jugglers_amount
+        return dst_juggler
+
+
+class UniqueHand(object):
+    def __init__(self, juggler, hand):
+        self.side = hand
+        self.juggler = juggler
+        self.unique = UniqueHand.create_unique(juggler, hand)
+
+    def __eq__(self, other):
+        if isinstance(other, UniqueHand) and self.unique == other.unique:
+            return True
+        return False
+
+    def __hash__(self):
+        return hash(self.unique)
+
+    def __repr__(self):
+        return self.unique
 
     @staticmethod
     def create_unique(juggler, hand):
