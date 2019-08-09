@@ -23,7 +23,11 @@ const getFullUrlPath = (requiredPath) => {
     return baseBackendUrl + "/" + backendConfig.routes[requiredPath];
 }
 
-export const analyzeService = (siteswap) => {
+export const analyzeService = async (siteswap) => {
     const path = getFullUrlPath("analyzer");
-    return axios.post(path, { "siteswap": siteswap })
+    const response = await axios.post(path, { "siteswap": siteswap });
+    const data = await response.data;
+    data.beatmap = JSON.parse(data.beatmap);
+    data.problems = JSON.parse(data.problems);
+    return response.data;
 }

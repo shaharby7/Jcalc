@@ -61,4 +61,7 @@ def _create_message(catches_amount, throws_amount, hand_id):
     return PROBLEM_MESSAGE_TEMPLATE.format(number_of_more=catches_amount,
                                            kind_of_more=CATCHES,
                                            number_of_less=throws_amount,
-                                           kind_of_less=THROWS, hand_id=hand_id)
+                                           kind_of_less=THROWS,
+                                           hand_id=hand_id)
+
+def _create_message
