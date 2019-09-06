@@ -23,25 +23,25 @@ class Pattern(object):
         self.beatmap = []
         self.problems = []
         self.highest_throw = None
-        self.__initiate_pattern_data()
+        self.__analyze_pattern()
 
-    def __initiate_pattern_data(self):
+    def __analyze_pattern(self):
         try:
             tokens_tree = SSparser.parse(self.siteswap)
         except Exception as e:
             self.problems = [PatternProblem(message=repr(e), problematic_beat=-1, kind="parsing_error")]
         else:
-            self._set_beatmap(tokens_tree)
+            self._create_beatmap(tokens_tree)
             self.highest_throw = self._get_highest_throw()
-            self._set_catches_to_all_beats()
+            self._add_catches_to_beatmap()
             self.problems = debug_pattern(self)
 
-    def _set_beatmap(self, tokens_tree):
+    def _create_beatmap(self, tokens_tree):
         while len(self.beatmap) == 0 or len(self.beatmap) % HANDS_FOR_JUGGLER:
             for throw in tokens_tree:
-                self._add_throw(throw)
+                self._add_beat_to_beatmap(throw)
 
-    def _add_throw(self, throw):
+    def _add_beat_to_beatmap(self, throw):
         beat = Beat(throw, self._current_hands_state)
         self.beatmap.append(beat)
         self._add_empty_beats_if_needed(beat)
@@ -49,7 +49,7 @@ class Pattern(object):
 
     def _add_empty_beats_if_needed(self, beat):
         if beat.beat_duration > 1:
-            empty_beat = Beat(is_empty=True)
+            empty_beat = Beat(is_empty=True, jugglers_amount_if_empty=beat.jugglers_amount)
             list_of_empty_beats = [deepcopy(empty_beat)] * (beat.beat_duration - 1)
             self.beatmap.extend(list_of_empty_beats)
 
@@ -62,12 +62,12 @@ class Pattern(object):
     def _get_highest_throw(self):
         highest_throw_for_each_beat = []
         for beat in self.beatmap:
-            if not beat.is_empty:
-                highest_throw_for_beat = max(throw.beats for throw in beat.throws)
-                highest_throw_for_each_beat.append(highest_throw_for_beat)
+            all_throws_length_in_beat = [throw.beats for throw in beat.throws]
+            highest_throw_for_beat = Pattern.max_if_null_return_0(all_throws_length_in_beat)
+            highest_throw_for_each_beat.append(highest_throw_for_beat)
         return max(highest_throw_for_each_beat)
 
-    def _set_catches_to_all_beats(self):
+    def _add_catches_to_beatmap(self):
         for beat_index, beat in enumerate(self.beatmap):
             catches_at_beat = self._calculate_catches_at_beat(beat_index)
             beat.set_catches_at_beat(catches_at_beat)
@@ -90,3 +90,10 @@ class Pattern(object):
                 if former_throw.beats == distance_between_beats:
                     relevant_throws_for_catch.append(former_throw)
         return relevant_throws_for_catch
+
+    @staticmethod
+    def max_if_null_return_0(some_list):
+        try:
+            return max(some_list)
+        except ValueError:
+            return 0

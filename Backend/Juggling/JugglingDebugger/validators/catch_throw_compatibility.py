@@ -67,9 +67,9 @@ def _create_message(catches_amount, throws_amount, hand, jugglers_amount):
                                         hand_side=hand.side,
                                         juggler_number=hand.juggler)
 
-    return relevant_template.format(number_of_more=catches_amount,
-                                    kind_of_more=CATCHES,
-                                    number_of_less=throws_amount,
-                                    kind_of_less=THROWS,
+    return relevant_template.format(number_of_more=throws_amount,
+                                    kind_of_more=THROWS,
+                                    number_of_less=catches_amount,
+                                    kind_of_less=CATCHES,
                                     hand_side=hand.side,
                                     juggler_number=hand.juggler)

@@ -12,13 +12,13 @@ from copy import deepcopy
 
 class Beat(object):
 
-    def __init__(self, throw_token=None, hand_state_before_beat=None, is_empty=False):
+    def __init__(self, throw_token=None, hand_state_before_beat=None, is_empty=False, jugglers_amount_if_empty=0):
         if not is_empty:
             throws, beat_duration, jugglers_amount, implanted_hand_state = \
                 self._create_beat_from_tokens(throw_token, hand_state_before_beat)
         else:
             throws, beat_duration, jugglers_amount, implanted_hand_state = \
-                ([], 1, None, None)
+                ([], 1, jugglers_amount_if_empty, None)
         self.beat_duration = beat_duration
         self.throws = throws
         self.jugglers_amount = jugglers_amount
@@ -38,8 +38,9 @@ class Beat(object):
 
     @staticmethod
     def _basic_throw_handler(token, hand_state, thrower, jugglers_amount):
-        throw = Throw(token, hand_state[0], thrower, jugglers_amount)
-        throws = [throw]
+        throws = []
+        if token.beats_number > 0:
+            throws = [Throw(token, hand_state[0], thrower, jugglers_amount)]
         return throws, 1, 1, None
 
     @staticmethod
