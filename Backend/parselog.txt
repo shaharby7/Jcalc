@@ -1,0 +1,80 @@
+   yacc.py: 362:PLY: PARSE DEBUG START
+   yacc.py: 410:
+   yacc.py: 411:State  : 0
+   yacc.py: 435:Stack  : . LexToken(THROW,throwToken('throw_type'='base_throw','beats_number'=1),1,0)
+   yacc.py: 445:Action : Shift and goto state 2
+   yacc.py: 410:
+   yacc.py: 411:State  : 2
+   yacc.py: 435:Stack  : THROW . LexToken(L_PARENTHESIS,'(',1,1)
+   yacc.py: 471:Action : Reduce rule [throw -> THROW] with [<throwToken @ 0x3c547f0>] and goto state 3
+   yacc.py: 506:Result : <throwToken @ 0x3c546d8> (throwToken('throw_type'='base_throw','be ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 3
+   yacc.py: 435:Stack  : throw . LexToken(L_PARENTHESIS,'(',1,1)
+   yacc.py: 471:Action : Reduce rule [sequence -> throw] with [<throwToken @ 0x3c546d8>] and goto state 4
+   yacc.py: 506:Result : <list @ 0x3691708> ([throwToken('throw_type'='base_throw','b ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 4
+   yacc.py: 435:Stack  : sequence . LexToken(L_PARENTHESIS,'(',1,1)
+   yacc.py: 445:Action : Shift and goto state 1
+   yacc.py: 410:
+   yacc.py: 411:State  : 1
+   yacc.py: 435:Stack  : sequence L_PARENTHESIS . LexToken(THROW,throwToken('throw_type'='base_throw','beats_number'=2),1,2)
+   yacc.py: 445:Action : Shift and goto state 2
+   yacc.py: 410:
+   yacc.py: 411:State  : 2
+   yacc.py: 435:Stack  : sequence L_PARENTHESIS THROW . LexToken(R_PARENTHESIS,')',1,3)
+   yacc.py: 471:Action : Reduce rule [throw -> THROW] with [<throwToken @ 0x3c54978>] and goto state 3
+   yacc.py: 506:Result : <throwToken @ 0x3c54ac8> (throwToken('throw_type'='base_throw','be ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 3
+   yacc.py: 435:Stack  : sequence L_PARENTHESIS throw . LexToken(R_PARENTHESIS,')',1,3)
+   yacc.py: 471:Action : Reduce rule [sequence -> throw] with [<throwToken @ 0x3c54ac8>] and goto state 5
+   yacc.py: 506:Result : <list @ 0x363aa48> ([throwToken('throw_type'='base_throw','b ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 5
+   yacc.py: 435:Stack  : sequence L_PARENTHESIS sequence . LexToken(R_PARENTHESIS,')',1,3)
+   yacc.py: 445:Action : Shift and goto state 7
+   yacc.py: 410:
+   yacc.py: 411:State  : 7
+   yacc.py: 435:Stack  : sequence L_PARENTHESIS sequence R_PARENTHESIS . LexToken(THROW,throwToken('throw_type'='base_throw','beats_number'=3),1,4)
+   yacc.py: 471:Action : Reduce rule [throw -> L_PARENTHESIS sequence R_PARENTHESIS] with ['(',<list @ 0x363aa48>,')'] and goto state 6
+   yacc.py: 506:Result : <throwToken @ 0x3c54a20> (throwToken('throw_type'='sync','sub_thro ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 6
+   yacc.py: 435:Stack  : sequence throw . LexToken(THROW,throwToken('throw_type'='base_throw','beats_number'=3),1,4)
+   yacc.py: 471:Action : Reduce rule [sequence -> sequence throw] with [<list @ 0x3691708>,<throwToken @ 0x3c54a20>] and goto state 4
+   yacc.py: 506:Result : <list @ 0x3c15108> ([throwToken('throw_type'='base_throw','b ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 4
+   yacc.py: 435:Stack  : sequence . LexToken(THROW,throwToken('throw_type'='base_throw','beats_number'=3),1,4)
+   yacc.py: 445:Action : Shift and goto state 2
+   yacc.py: 410:
+   yacc.py: 411:State  : 2
+   yacc.py: 435:Stack  : sequence THROW . LexToken(THROW,throwToken('throw_type'='base_throw','beats_number'=4),1,5)
+   yacc.py: 471:Action : Reduce rule [throw -> THROW] with [<throwToken @ 0x3c54a58>] and goto state 6
+   yacc.py: 506:Result : <throwToken @ 0x3c54b38> (throwToken('throw_type'='base_throw','be ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 6
+   yacc.py: 435:Stack  : sequence throw . LexToken(THROW,throwToken('throw_type'='base_throw','beats_number'=4),1,5)
+   yacc.py: 471:Action : Reduce rule [sequence -> sequence throw] with [<list @ 0x3c15108>,<throwToken @ 0x3c54b38>] and goto state 4
+   yacc.py: 506:Result : <list @ 0x3691708> ([throwToken('throw_type'='base_throw','b ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 4
+   yacc.py: 435:Stack  : sequence . LexToken(THROW,throwToken('throw_type'='base_throw','beats_number'=4),1,5)
+   yacc.py: 445:Action : Shift and goto state 2
+   yacc.py: 410:
+   yacc.py: 411:State  : 2
+   yacc.py: 435:Stack  : sequence THROW . $end
+   yacc.py: 471:Action : Reduce rule [throw -> THROW] with [<throwToken @ 0x3c54828>] and goto state 6
+   yacc.py: 506:Result : <throwToken @ 0x3c54b00> (throwToken('throw_type'='base_throw','be ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 6
+   yacc.py: 435:Stack  : sequence throw . $end
+   yacc.py: 471:Action : Reduce rule [sequence -> sequence throw] with [<list @ 0x3691708>,<throwToken @ 0x3c54b00>] and goto state 4
+   yacc.py: 506:Result : <list @ 0x3c15108> ([throwToken('throw_type'='base_throw','b ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 4
+   yacc.py: 435:Stack  : sequence . $end
+   yacc.py: 571:Done   : Returning <list @ 0x3c15108> ([throwToken('throw_type'='base_throw','b ...)
+   yacc.py: 572:PLY: PARSE DEBUG END
