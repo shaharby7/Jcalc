@@ -12,18 +12,18 @@ from copy import deepcopy
 
 class Beat(object):
 
-    def __init__(self, throw_token=None, hand_state_before_beat=None, is_empty=False, jugglers_amount_if_empty=0):
-        if not is_empty:
+    def __init__(self, throw_token=None, hand_state_before_beat=None, is_fake_for_sync=False, jugglers_amount_if_fake=0):
+        if not is_fake_for_sync:
             throws, beat_duration, jugglers_amount, implanted_hand_state = \
                 self._create_beat_from_tokens(throw_token, hand_state_before_beat)
         else:
             throws, beat_duration, jugglers_amount, implanted_hand_state = \
-                ([], 1, jugglers_amount_if_empty, None)
+                ([], 1, jugglers_amount_if_fake, None)
         self.beat_duration = beat_duration
         self.throws = throws
         self.jugglers_amount = jugglers_amount
         self.implanted_hand_state = implanted_hand_state
-        self.is_empty = is_empty
+        self.is_fake_for_sync = is_fake_for_sync
         self.catches = None
 
     def set_catches_at_beat(self, catches):
@@ -38,9 +38,7 @@ class Beat(object):
 
     @staticmethod
     def _basic_throw_handler(token, hand_state, thrower, jugglers_amount):
-        throws = []
-        if token.beats_number > 0:
-            throws = [Throw(token, hand_state[0], thrower, jugglers_amount)]
+        throws = [Throw(token, hand_state[0], thrower, jugglers_amount)]
         return throws, 1, 1, None
 
     @staticmethod

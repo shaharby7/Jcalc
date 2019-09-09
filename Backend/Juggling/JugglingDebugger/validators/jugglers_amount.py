@@ -9,7 +9,7 @@ MESSAGE_TEMPLATE = """Pattern is not consistent in jugglers amount.
 def jugglers_amount(pattern):
     first_beat = pattern.beatmap[0].jugglers_amount
     for beat_index, beat in enumerate(pattern.beatmap):
-        if not beat.is_empty and beat.jugglers_amount != first_beat:
+        if not beat.is_fake_for_sync and beat.jugglers_amount != first_beat:
             return PatternProblem(message=MESSAGE_TEMPLATE.format(first_beat=first_beat,
                                                                   problematic_beat=beat_index,
                                                                   problematic_number=beat.jugglers_amount),

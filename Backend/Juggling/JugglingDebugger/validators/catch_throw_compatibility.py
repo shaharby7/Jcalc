@@ -39,9 +39,9 @@ def _validate_beat(beat, beat_index):
 def _get_number_of_throws_or_catches_for_hand(beat, throw_or_catch):
     relevant_list = []
     if throw_or_catch == THROWS:
-        relevant_list = [throw.src_unique for throw in beat.throws]
+        relevant_list = [throw.src for throw in beat.throws if throw.beats > 0]
     elif throw_or_catch == CATCHES:
-        relevant_list = [throw.dst_unique for throw in beat.catches]
+        relevant_list = [throw.dst for throw in beat.catches]
     return Counter(relevant_list)
 
 

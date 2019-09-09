@@ -49,7 +49,7 @@ class Pattern(object):
 
     def _add_empty_beats_if_needed(self, beat):
         if beat.beat_duration > 1:
-            empty_beat = Beat(is_empty=True, jugglers_amount_if_empty=beat.jugglers_amount)
+            empty_beat = Beat(is_fake_for_sync=True, jugglers_amount_if_fake=beat.jugglers_amount)
             list_of_empty_beats = [deepcopy(empty_beat)] * (beat.beat_duration - 1)
             self.beatmap.extend(list_of_empty_beats)
 

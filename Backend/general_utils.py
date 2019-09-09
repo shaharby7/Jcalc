@@ -6,6 +6,7 @@ Created on Thu May 16 15:59:32 2019
 """
 import json
 import os
+import functools
 
 
 def get_real_directory():
@@ -43,3 +44,14 @@ def swap_hands(hands):
 
 def xor(x, y):
     return (x and not y) or (y and not x)
+
+
+def reduce_repetitive_siteswaps(siteswap):
+    len_siteswap = len(siteswap)
+    for chunk_size in range(len_siteswap):
+        chunk_size += 1
+        chunks = [siteswap[i:i + chunk_size] for i in range(0, len_siteswap, chunk_size)]
+        is_repetitive_chunks = functools.reduce(lambda a, b: a == b, chunks)
+        if is_repetitive_chunks:
+            return chunks[0]
+    return siteswap

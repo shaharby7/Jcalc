@@ -22,13 +22,13 @@ tokens = ['THROW',
 
 literals = "LR"
 
-t_ignore = r"".join([str(throw_type["SEP"]) for throw_type in THROW_TYPES] + WHITE_SPACES)
+t_ignore = r"".join([str(throw_params["SEP"]) for throw_params in THROW_TYPES.values()] + WHITE_SPACES)
 
 
 def get_parenthesis_regex(L_or_R):
     list_of_chars = []
-    for thorw_type in THROW_TYPES:
-        char = thorw_type[L_or_R]
+    for throw_type, throw_parameters in THROW_TYPES.items():
+        char = throw_parameters[L_or_R]
         char = str(char)
         char = escape_metacharacters(char)
         list_of_chars.append(char)

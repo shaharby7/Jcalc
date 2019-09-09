@@ -34,13 +34,13 @@ def p_spetial_throws(p):
     """throw : L_PARENTHESIS sequence R_PARENTHESIS"""
     throw_type = None
     has_defined = False
-    for throw_type in THROW_TYPES:
-        if p[1] == throw_type["L_PAREN"] and p[3] == throw_type["R_PAREN"]:
+    for throw_type, throw_parameters in THROW_TYPES.items():
+        if p[1] == throw_parameters["L_PAREN"] and p[3] == throw_parameters["R_PAREN"]:
             has_defined = True
             break
     if not has_defined:
         raise Exception()
-    p[0] = throwToken(throw_type=throw_type["TYPE"], sub_throws=p[2])
+    p[0] = throwToken(throw_type=throw_type, sub_throws=p[2])
 
 
 def p_error(p):

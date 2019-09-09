@@ -1,25 +1,25 @@
-{  
-   "THROW_TYPES":[  
-      {  
-         "L_PAREN":"(",
-         "R_PAREN":")",
-         "SEP":",",
-         "TYPE":"sync",
-         "PRCEDENCE":1
-      },
-      {  
-         "L_PAREN":"[",
-         "R_PAREN":"]",
-         "SEP":"",
-         "TYPE":"multyplex",
-         "PRCEDENCE":0
-      },
-      {  
-         "L_PAREN":"<",
-         "R_PAREN":">",
-         "SEP":"|",
-         "TYPE":"passing",
-         "PRCEDENCE":2
-      }
-   ]
+{
+  "THROW_TYPES": {
+    "sync": {
+      "L_PAREN": "(",
+      "R_PAREN": ")",
+      "SEP": ",",
+      "SITESWAP_LEVEL": 1,
+      "COMMON_IDENTIFIER_IN_THROW_OBJ": "juggler"
+    },
+    "multyplex": {
+      "L_PAREN": "[",
+      "R_PAREN": "]",
+      "SEP": "",
+      "SITESWAP_LEVEL": 0,
+      "COMMON_IDENTIFIER_IN_THROW_OBJ": "unique"
+    },
+    "passing": {
+      "L_PAREN": "<",
+      "R_PAREN": ">",
+      "SEP": "|",
+      "SITESWAP_LEVEL": 2,
+      "COMMON_IDENTIFIER_IN_THROW_OBJ": ""
+    }
+  }
 }

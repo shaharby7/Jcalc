@@ -12,16 +12,17 @@ class Throw(object):
 
     def __init__(self, token, thrower_hand, thrower, jugglers_amount):
         assert token.throw_type == "base_throw"
-        self.src_unique = UniqueHand(juggler=(thrower if thrower else 0),
-                                     hand=(thrower_hand[0]))
-        self.dst_unique = None
+        self.src = UniqueHand(juggler=(thrower if thrower else 0),
+                              hand=(thrower_hand[0]))
+        self.dst = None
         self.__define_dst(token, thrower_hand, thrower, jugglers_amount)
         self.beats = token.beats_number
 
     def __define_dst(self, token, thrower_hand, thrower, jugglers_amount):
-        dst_hand = Throw.calculate_dst_hand(token, thrower_hand)
-        dst_juggling = Throw.calculate_dst_juggler(token, thrower, jugglers_amount)
-        self.dst_unique = UniqueHand(hand=dst_hand, juggler=dst_juggling)
+        if token.beats_number > 0:
+            dst_hand = Throw.calculate_dst_hand(token, thrower_hand)
+            dst_juggling = Throw.calculate_dst_juggler(token, thrower, jugglers_amount)
+            self.dst = UniqueHand(hand=dst_hand, juggler=dst_juggling)
 
     @staticmethod
     def calculate_dst_hand(token, thrower_hand):
