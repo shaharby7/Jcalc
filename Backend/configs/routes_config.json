@@ -1,3 +1,4 @@
 {
-  "analyzer": "/analyzer"
+  "analyzer": "/analyzer",
+  "suggest_valid_pattern": "/suggest_valid_pattern"
 }

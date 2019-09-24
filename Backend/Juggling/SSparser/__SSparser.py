@@ -30,7 +30,13 @@ def p_throw_THROW(p):
     p[0] = deepcopy(p[1])
 
 
-def p_spetial_throws(p):
+def p_throw_throw_question_mark(p):
+    """throw : throw '!'"""
+    p[0] = deepcopy(p[1])
+    p[0].set_specified_beat_duration(1)
+
+
+def p_spatial_throws(p):
     """throw : L_PARENTHESIS sequence R_PARENTHESIS"""
     throw_type = None
     has_defined = False

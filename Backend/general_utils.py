@@ -9,10 +9,6 @@ import os
 import functools
 
 
-def get_real_directory():
-    return os.path.dirname(os.path.realpath(__file__))
-
-
 def read_config(config_name):
     path = os.path.join("configs", config_name + ".json")
     with open(path, "r") as file:
@@ -55,3 +51,25 @@ def reduce_repetitive_siteswaps(siteswap):
         if is_repetitive_chunks:
             return chunks[0]
     return siteswap
+
+
+def max_if_null_return_0(some_list):
+    try:
+        return max(some_list)
+    except ValueError:
+        return 0
+
+
+def is_beat_in_range(beat_idx, beats_to_include):
+    if beats_to_include is None:
+        return True
+    elif isinstance(beats_to_include, tuple):
+        return True if beat_idx in range(*beats_to_include) else False
+    elif isinstance(beats_to_include, int):
+        return True if beats_to_include == beat_idx else False
+
+
+def general_class_equality(self, other):
+    if isinstance(other, type(self)) and self.__dict__ == other.__dict__:
+        return True
+    return False

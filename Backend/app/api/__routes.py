@@ -3,11 +3,12 @@ from app.api.__models import pattern_model
 from app.api.__parsers import pattern_request_parser
 
 from flask_restplus import Resource
-from Juggling.BasicJuggling import Pattern
+from Juggling import Pattern, suggest_valid_pattern
 from general_utils import read_config
 
 ROUTES_CONFIG = read_config("routes_config")
 ANALYZER_ROUTE = ROUTES_CONFIG["analyzer"]
+SUGGEST_VALID_PATTERN_ROUTE = ROUTES_CONFIG["suggest_valid_pattern"]
 
 juggling_namespace = api.namespace('juggling', description='All Juggling calculations')
 
@@ -20,3 +21,14 @@ class PattenCollection(Resource):
         args = pattern_request_parser.parse_args()
         pattern = Pattern(args["siteswap"])
         return pattern
+
+
+@juggling_namespace.route(SUGGEST_VALID_PATTERN_ROUTE, methods=["POST"])
+class SuggestionsCollection(Resource):
+    @api.doc(parser=pattern_request_parser)
+    @api.marshal_with(pattern_model)
+    def post(self):
+        args = pattern_request_parser.parse_args()
+        pattern = Pattern(args["siteswap"])
+        fixed_pattern = suggest_valid_pattern(pattern)
+        return fixed_pattern

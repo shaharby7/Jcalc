@@ -5,107 +5,57 @@ Created on Fri May 10 16:17:41 2019
 @author: shahar
 """
 
-from .__Throw import Throw
-from general_utils import swap_hands
-from copy import deepcopy
+from .__tokens_handler import tokens_handler
+from collections import Counter
+
+CATCHES = "catches"
+THROWS = "throws"
+DIFFERENCE = "difference"
 
 
 class Beat(object):
 
-    def __init__(self, throw_token=None, hand_state_before_beat=None, is_fake_for_sync=False, jugglers_amount_if_fake=0):
-        if not is_fake_for_sync:
-            throws, beat_duration, jugglers_amount, implanted_hand_state = \
-                self._create_beat_from_tokens(throw_token, hand_state_before_beat)
-        else:
-            throws, beat_duration, jugglers_amount, implanted_hand_state = \
-                ([], 1, jugglers_amount_if_fake, None)
+    def __init__(self, throw_token=None, hand_state_before_beat=None, is_fake_for_sync=False,
+                 jugglers_amount_if_fake=0):
+        throws, beat_duration, jugglers_amount, implanted_hand_state = \
+            tokens_handler(throw_token, hand_state_before_beat) \
+                if not is_fake_for_sync else ([], 1, jugglers_amount_if_fake, None)
         self.beat_duration = beat_duration
         self.throws = throws
         self.jugglers_amount = jugglers_amount
         self.implanted_hand_state = implanted_hand_state
         self.is_fake_for_sync = is_fake_for_sync
-        self.catches = None
+        self.catches = []
 
-    def set_catches_at_beat(self, catches):
-        self.catches = catches
+    def shift_throw(self, throw_obj, shift_to_beat, shift_to_hand):
+        for throw in self.throws:
+            if throw == throw_obj:
+                throw.set_new_dst(shift_to_hand)
+                throw.set_new_beats_number(shift_to_beat)
 
-    @staticmethod
-    def _create_beat_from_tokens(throw_token, hand_state, thrower=None, jugglers_amount=None):
-        handler = Beat._handlers[throw_token.throw_type]
-        throws, beat_duration, jugglers_amount, implanted_hand_state \
-            = handler(throw_token, hand_state, thrower, jugglers_amount)
-        return throws, beat_duration, jugglers_amount, implanted_hand_state
+    def clear_catches(self):
+        self.catches = []
 
-    @staticmethod
-    def _basic_throw_handler(token, hand_state, thrower, jugglers_amount):
-        throws = [Throw(token, hand_state[0], thrower, jugglers_amount)]
-        return throws, 1, 1, None
+    def add_catch(self, throw_obj, beat_number_of_throw, beat_number_of_catch, catch_after_period):
+        throw_obj.set_route_description(beat_number_of_throw, beat_number_of_catch, catch_after_period)
+        self.catches.append(throw_obj)
 
-    @staticmethod
-    def _passing_throw_handler(token, hand_state, thrower, jugglers_amount):
-        del thrower
-        del jugglers_amount
-        throws = []
-        each_beat_duration = []
-        jugglers_amount = len(token.sub_throws)
-        if jugglers_amount > len(hand_state):
-            for i in range(len(hand_state), jugglers_amount):
-                hand_state.append("R")
-        for thrower, sub_token in enumerate(token.sub_throws):
-            current_throw, current_beat_duration, ignored_juggling_anount, implanted_hand_state = \
-                Beat._create_beat_from_tokens(throw_token=sub_token,
-                                              hand_state=hand_state[thrower],
-                                              thrower=thrower,
-                                              jugglers_amount=jugglers_amount)
-            throws.extend(current_throw)
-            each_beat_duration.append(current_beat_duration)
-        implanted_hand_state = []
-        for idx, hand in enumerate(hand_state):
-            if each_beat_duration[idx] % 2 > 0:
-                implanted_hand_state.append(swap_hands(hand))
-            else:
-                implanted_hand_state.append(hand)
-        # Todo: add assertion
-        return throws, each_beat_duration[0], jugglers_amount, implanted_hand_state
+    def get_throws_catches_difference(self):
+        throws_for_hand = self._get_number_of_throws_or_catches_for_hand(throw_or_catch=THROWS)
+        catches_for_hand = self._get_number_of_throws_or_catches_for_hand(throw_or_catch=CATCHES)
+        all_involved_hands = set(throws_for_hand + catches_for_hand)
+        throws_catches_difference = {}
+        for hand in all_involved_hands:
+            throws_catches_difference.update({hand: {CATCHES: catches_for_hand.get(hand, 0),
+                                                     THROWS: throws_for_hand.get(hand, 0),
+                                                     DIFFERENCE: catches_for_hand.get(
+                                                         hand, 0) - throws_for_hand.get(hand, 0)}})
+        return throws_catches_difference
 
-    @staticmethod
-    def _sync_throw_handler(token, hand_state, thrower, jugglers_amount):
-        throws = []
-        current_hand_state = deepcopy(hand_state)
-        implanted_hand_state = None
-        for sub_token in token.sub_throws:
-            current_throw, current_beat_duration, jugglers_amount, implanted_hand_state = \
-                Beat._create_beat_from_tokens(throw_token=sub_token,
-                                              hand_state=current_hand_state,
-                                              thrower=thrower,
-                                              jugglers_amount=jugglers_amount)
-            throws.extend(current_throw)
-            current_hand_state = swap_hands(current_hand_state)
-        # TODO: add ! consideration for sync throw of one beat
-        return throws, 2, 1, implanted_hand_state
-
-    @staticmethod
-    def _multyplex_throw_handler(token, hand_state, thrower, jugglers_amount):
-        throws = []
-        implanted_hand_state = None
-        for sub_token in token.sub_throws:
-            current_throw, current_beat_duration, jugglers_amount, implanted_hand_state = \
-                Beat._create_beat_from_tokens(throw_token=sub_token,
-                                              hand_state=hand_state,
-                                              thrower=thrower,
-                                              jugglers_amount=jugglers_amount)
-            throws.extend(current_throw)
-        return throws, 1, 1, implanted_hand_state
-
-    @staticmethod
-    def _hand_assignment_handler(token, hand_state, thrower, jugglers_amount):
-        del hand_state, thrower, jugglers_amount
-        return [], 0, len(token.sub_throws), token.sub_throws
-
-    _handlers = {
-        "base_throw": _basic_throw_handler.__func__,
-        "sync": _sync_throw_handler.__func__,
-        "passing": _passing_throw_handler.__func__,
-        "multyplex": _multyplex_throw_handler.__func__,
-        "hands_assignment": _hand_assignment_handler.__func__
-    }
+    def _get_number_of_throws_or_catches_for_hand(self, throw_or_catch):
+        relevant_list = []
+        if throw_or_catch == THROWS:
+            relevant_list = [throw.src for throw in self.throws if throw.beats > 0]
+        elif throw_or_catch == CATCHES:
+            relevant_list = [catch.dst for catch in self.catches]
+        return Counter(relevant_list)
