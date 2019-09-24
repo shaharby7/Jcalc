@@ -1,5 +1,4 @@
-from unittest import TestCase
-from app import app
+from .__AppTestCase import AppTestCase
 from general_utils import read_config
 import json
 
@@ -18,10 +17,7 @@ MESSAGES = {
 }
 
 
-class TestAnalyzer(TestCase):
-    def setUp(self):
-        app.testing = True
-        self.app = app.test_client()
+class TestAnalyzer(AppTestCase):
 
     def get_problems_in_siteswap(self, siteswap):
         response = self.app.post(ANALYZER_PATH, query_string={"siteswap": siteswap})

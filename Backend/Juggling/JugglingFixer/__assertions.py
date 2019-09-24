@@ -18,7 +18,7 @@ def __assert_jugglers_amount(pattern):
 def __assert_negative_and_positive_exeedings_are_balanced(exceedings_map):
     sum_of_positives = reduce(lambda a, b: a + b, [len(exceeding[SOURCE_THROWS]) for exceeding in exceedings_map if
                                                    exceeding[EXCEEDING] > 0])
-    sum_of_negatives = reduce(lambda a, b: a + b, [exceeding(EXCEEDING) for exceeding in exceedings_map if
+    sum_of_negatives = reduce(lambda a, b: a + b, [exceeding[EXCEEDING] for exceeding in exceedings_map if
                                                    exceeding[EXCEEDING] < 0])
     if sum_of_positives + sum_of_negatives != 0:
         raise JugglingException("Exceedings in pattern cannot be balanced")
