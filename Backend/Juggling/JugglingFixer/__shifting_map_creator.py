@@ -4,7 +4,6 @@ from .__constant_keys import *
 def create_shifting_map_for_exceedings(exceedings):
     ordered_list_of_positive_exceedings = _create_ordered_list_of_positive_exceedings(exceedings)
     ordered_list_of_negative_exceedings = _create_ordered_list_of_negative_exceedings(exceedings)
-    assert len(ordered_list_of_negative_exceedings) == len(ordered_list_of_positive_exceedings)
     shifting_map = [{**ordered_list_of_positive_exceedings[i], **ordered_list_of_negative_exceedings[i]}
                     for i in range(len(ordered_list_of_negative_exceedings))]
     return shifting_map

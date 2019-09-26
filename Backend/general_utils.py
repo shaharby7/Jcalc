@@ -64,7 +64,7 @@ def is_beat_in_range(beat_idx, beats_to_include):
     if beats_to_include is None:
         return True
     elif isinstance(beats_to_include, tuple):
-        return True if beat_idx in range(*beats_to_include) else False
+        return True if (beats_to_include[0] <= beat_idx <= beats_to_include[1]) else False
     elif isinstance(beats_to_include, int):
         return True if beats_to_include == beat_idx else False
 

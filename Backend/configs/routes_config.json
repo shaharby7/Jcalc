@@ -1,4 +1,5 @@
 {
   "analyzer": "/analyzer",
-  "suggest_valid_pattern": "/suggest_valid_pattern"
+  "suggest_valid_pattern": "/suggest_valid_pattern",
+  "transactions": "/transactions"
 }
