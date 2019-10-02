@@ -1,5 +1,6 @@
 from .__AppTestCase import AppTestCase
 from general_utils import read_config
+import json
 
 TRANSACTIONS_PATH = "/juggling" + read_config("routes_config")["transactions"]
 
@@ -10,10 +11,12 @@ TRANSACTIONS_CHECKS = TEST_CONFIG["transactions_checks"]
 class TestTransactions(AppTestCase):
     def test_transactions(self):
         for siteswap1, siteswap2 in TRANSACTIONS_CHECKS:
+            print(siteswap1, siteswap2)
             response = self.app.post(TRANSACTIONS_PATH,
                                      query_string={"siteswap_1": siteswap1, "siteswap_2": siteswap2})
             if response.status_code == 200:
-                self.assertTrue(len(response.json["problems"]), 0)
+                problems = json.loads(response.json["problems"])
+                self.assertEqual(len(problems), 0)
                 self.assertTrue(siteswap1 in response.json["siteswap"])
                 self.assertTrue(siteswap2 in response.json["siteswap"])
                 print(siteswap1, siteswap2, response.json["siteswap"])

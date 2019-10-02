@@ -40,9 +40,9 @@ class Beat(object):
         throw_obj.set_route_description(beat_number_of_throw, beat_number_of_catch, catch_after_period)
         self.catches.append(throw_obj)
 
-    def get_throws_catches_difference(self):
-        throws_for_hand = self._get_number_of_throws_or_catches_for_hand(throw_or_catch=THROWS)
-        catches_for_hand = self._get_number_of_throws_or_catches_for_hand(throw_or_catch=CATCHES)
+    def get_throws_catches_difference(self, with_catches_after_period=True):
+        throws_for_hand = self._get_number_of_throws_or_catches_for_hand(THROWS)
+        catches_for_hand = self._get_number_of_throws_or_catches_for_hand(CATCHES, with_catches_after_period)
         all_involved_hands = set(throws_for_hand + catches_for_hand)
         throws_catches_difference = {}
         for hand in all_involved_hands:
@@ -52,10 +52,11 @@ class Beat(object):
                                                          hand, 0) - throws_for_hand.get(hand, 0)}})
         return throws_catches_difference
 
-    def _get_number_of_throws_or_catches_for_hand(self, throw_or_catch):
+    def _get_number_of_throws_or_catches_for_hand(self, throw_or_catch, with_catches_after_period=True):
         relevant_list = []
         if throw_or_catch == THROWS:
             relevant_list = [throw.src for throw in self.throws if throw.beats > 0]
         elif throw_or_catch == CATCHES:
-            relevant_list = [catch.dst for catch in self.catches]
+            relevant_list = [catch.dst for catch in self.catches if not (
+                    catch.route_description.catch_after_period and not with_catches_after_period)]
         return Counter(relevant_list)
