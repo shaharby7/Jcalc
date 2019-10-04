@@ -16,22 +16,6 @@ export default class AnalayzerPage extends (React.Component) {
         this.setState({ "analyzedPattern": pattern });
     };
 
-    // messageList = () => {
-    //     if (Object.keys(this.state.analyzedPattern).length == 0) {
-    //         return []
-    //     }
-    //     else {
-    //         if (this.state.analyzedPattern.problems.length>0) {
-    //             return this.state.analyzedPattern.problems.map(
-    //                 (problem) => ["logical_failure", problem.message]
-    //             );
-    //         }
-    //         else {
-    //             return [["success", "Awesome siteswap :)"]];
-    //         }
-    //     }
-    // }
-
     render() {
         return <div>
             <h1>Analyze your pattern!</h1>
