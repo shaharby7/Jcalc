@@ -1,0 +1,1 @@
+export let PagesConfig = { "Analyze pattern": "AnalyzerPage" };
