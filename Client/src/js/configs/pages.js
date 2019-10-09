@@ -1,1 +1,4 @@
-export let PagesConfig = { "Analyze pattern": "AnalyzerPage" };
+export let PagesConfig = {
+    "Analyze pattern": "AnalyzerPage",
+    "Transactions finder":"TransactionsPage"
+};

@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export default function AnalayzerPageForm(props) {
+export default function AnalyzerPageForm(props) {
 
     
     const classes = useStyles();
@@ -33,7 +33,6 @@ export default function AnalayzerPageForm(props) {
 
     const onSubmit = () => {
         props.updatePattern(siteswap);
-        // setSiteswap("");
     }
 
     return <form className={classes.container} noValidate autoComplete="off">

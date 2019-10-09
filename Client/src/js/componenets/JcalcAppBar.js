@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -9,10 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Typography from '@material-ui/core/Typography';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { BrowserRouter as Router, Route } from 'react-router-dom'
-import AnalayzerPage from './pages/AnalazerPage/AnalayzerPage.js'
-import HomePage from './pages/HomePage/HomePage.js'
-import { PagesConfig } from '../configs/pages.js'
+import { PagesConfig } from '../configs/pages.js';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -26,7 +23,14 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-
+function JcalcMenuItem(pageDesctiption, pageLocation, handleClose) {
+    return <MenuItem key={"menuItem for " + pageDesctiption}
+        onClick={handleClose}>
+        <NavLink to={"/" + pageLocation}>
+            {pageDesctiption}
+        </NavLink>
+    </MenuItem>
+}
 
 
 export default function JcalcAppBar() {
@@ -43,15 +47,10 @@ export default function JcalcAppBar() {
     };
 
     const getMenuItems = () => {
-        let menuItems = [];
+        let menuItems = [JcalcMenuItem("Home", "", handleClose)];
         for (const [pageDesctiption, pageLocation] of Object.entries(PagesConfig)) {
             menuItems.push(
-                <MenuItem key={"menuItem for " + pageDesctiption}
-                    onClick={handleClose}>
-                    <NavLink to={"/" + pageLocation}>
-                        {pageDesctiption}
-                    </NavLink>
-                </MenuItem>
+                JcalcMenuItem(pageDesctiption, pageLocation, handleClose)
             );
         }
         return menuItems;

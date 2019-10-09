@@ -1,9 +1,9 @@
 import React from 'react'
-import AnalayzerPageForm from './AnalayzerPageForm.js'
-import AnalyzeResults from './AnalyzeResults.js'
-import { analyzeService } from './../../../backendHandlers/backendHandlers.js'
+import AnalyzerPageForm from './AnalyzerPageForm'
+import AnalyzeResults from './AnalyzerResults.js'
+import { analyzeService } from '../../../backendHandlers/backendHandlers.js'
 
-export default class AnalayzerPage extends (React.Component) {
+export default class AnalyzerPage extends (React.Component) {
     constructor(props) {
         super(props);
         this.state = {
@@ -19,7 +19,7 @@ export default class AnalayzerPage extends (React.Component) {
     render() {
         return <div>
             <h1>Analyze your pattern!</h1>
-            <AnalayzerPageForm updatePattern={this.setPattern} />
+            <AnalyzerPageForm updatePattern={this.setPattern} />
             {(Object.keys(this.state.analyzedPattern).length>0)?
                 <AnalyzeResults pattern={this.state.analyzedPattern} />:null}
         </div>;

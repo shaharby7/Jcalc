@@ -1,15 +1,23 @@
-import React, { Component } from 'react'
-import { Route, Switch } from 'react-router-dom'
-import AnalayzerPage from './pages/AnalazerPage/AnalayzerPage'
-import HomePage from './pages/HomePage/HomePage'
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+import { PagesConfig } from '../configs/pages.js';
+import * as pages from './pages/index';
 
-const AppSwitch = () => (
-    <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/AnalyzerPage" component={AnalayzerPage} />
+function AppRoute(routeComponent) {
+    const CompontetDestination = require(`./pages/${routeComponent}/${routeComponent}`).default;
+    return (<Route path={`/${routeComponent}`}
+        component={CompontetDestination}
+        key={`Route to ${routeComponent}`} />);
+}
+
+function AppSwitch() {
+    let Routes = Object.values(PagesConfig).map(AppRoute);
+    return (<Switch>
+        <Route exact path="/" component={pages.HomePage} />
+        {Routes}
         <Route component={NotFound} />
-    </Switch>
-)
+    </Switch>);
+}
 
 const NotFound = () => <h1>404.. This page is not found!</h1>
 
