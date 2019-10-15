@@ -9,6 +9,7 @@ from ply import lex
 import re
 from .__throwToken import throwToken
 from general_utils import read_config, escape_metacharacters
+from Juggling import JugglingException
 
 SYNTAX_CONFIG = read_config("syntax_config")
 THROW_TYPES = SYNTAX_CONFIG["THROW_TYPES"]
@@ -99,8 +100,8 @@ def t_HANDS_ASSIGNMENT(t):
 
 
 def t_error(t):
-    print("Illegal character '%s'" % t.value[0])
-    t.lexer.skip(1)
+    raise JugglingException(message="Illegal character '%s'" % t.value[0],
+                            problematic_beat=-1)
 
 
 lexer = lex.lex()

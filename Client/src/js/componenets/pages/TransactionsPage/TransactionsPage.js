@@ -1,6 +1,6 @@
 import React from 'react'
 import TransactionsPageForm from './TransactionsPageForm'
-import { TransactiosnService } from '../../../backendHandlers/backendHandlers.js'
+import { defaultBackendRequest } from '../../../backendHandlers/backendHandlers.js'
 
 export default class TransactionsPage extends (React.Component) {
     constructor(props) {
@@ -11,7 +11,7 @@ export default class TransactionsPage extends (React.Component) {
     };
 
     setPattern = async (siteswap1, siteswap2) => {
-        const pattern = await TransactiosnService(siteswap1, siteswap2);
+        const pattern = await defaultBackendRequest("transactions", [siteswap1, siteswap2]);
         this.setState({ "TransactionPattern": pattern });
     };
 

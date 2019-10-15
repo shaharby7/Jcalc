@@ -7,7 +7,13 @@ api = Api(version='1.0', title='Jcalc API',
 
 @api.errorhandler
 def default_error_handler(e):
-    json = {"message": "||".join(e.args), 'trace_back': repr(e), "error_type": type(e).__name__}
     if isinstance(e, JugglingException):
-        json.update({"problematic_beat": e.problematic_beat})
-    return json, 500
+        data = {"success": False,
+                "message": "||".join(e.args),
+                "problematic_beat": e.problematic_beat}
+        return data, 200
+
+    data = {"message": "||".join(e.args),
+            'trace_back': repr(e),
+            "error_type": type(e).__name__}
+    return data, 500

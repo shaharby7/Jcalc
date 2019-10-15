@@ -16,5 +16,6 @@ pattern_model = api.model('Pattern', {
     'siteswap': fields.String(required=True),
     'beatmap': ComplexClassField(required=True),
     'highest_throw': fields.String(required=True),
-    'problems': ComplexClassField(required=True)
+    'problems': ComplexClassField(required=True),
+    'success': fields.Boolean(required=False, default=True)
 })

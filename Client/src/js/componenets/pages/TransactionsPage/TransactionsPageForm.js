@@ -33,7 +33,7 @@ export default function TransactionsPageForm(props) {
         (state, newState) => ({ ...state, ...newState }),
         {
             siteswap1: '',
-            siteswap1: ''
+            siteswap2: ''
         }
     );
 

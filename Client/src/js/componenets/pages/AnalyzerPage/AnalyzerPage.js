@@ -1,7 +1,7 @@
 import React from 'react'
 import AnalyzerPageForm from './AnalyzerPageForm'
 import AnalyzeResults from './AnalyzerResults.js'
-import { analyzeService } from '../../../backendHandlers/backendHandlers.js'
+import { defaultBackendRequest } from '../../../backendHandlers/backendHandlers.js'
 
 export default class AnalyzerPage extends (React.Component) {
     constructor(props) {
@@ -12,7 +12,7 @@ export default class AnalyzerPage extends (React.Component) {
     };
 
     setPattern = async (siteswap) => {
-        const pattern = await analyzeService(siteswap);
+        const pattern = await defaultBackendRequest("analyzer", [siteswap]);
         this.setState({ "analyzedPattern": pattern });
     };
 
@@ -20,8 +20,8 @@ export default class AnalyzerPage extends (React.Component) {
         return <div>
             <h1>Analyze your pattern!</h1>
             <AnalyzerPageForm updatePattern={this.setPattern} />
-            {(Object.keys(this.state.analyzedPattern).length>0)?
-                <AnalyzeResults pattern={this.state.analyzedPattern} />:null}
+            {(Object.keys(this.state.analyzedPattern).length > 0) ?
+                <AnalyzeResults pattern={this.state.analyzedPattern} /> : null}
         </div>;
     }
 }

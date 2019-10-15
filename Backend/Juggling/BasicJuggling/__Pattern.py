@@ -8,8 +8,8 @@ Created on Fri May 10 16:05:54 2019
 from Juggling.SSparser import SSparser
 from Juggling.SScomposer import compose_siteswap
 from .__Beat import Beat
-from general_utils import swap_hands, max_if_null_return_0, is_beat_in_range
-from ..JugglingDebugger import debug_pattern, PatternProblem
+from general_utils import swap_hands, max_if_null_return_0
+from ..JugglingDebugger import debug_pattern
 
 from copy import deepcopy
 
@@ -41,16 +41,12 @@ class Pattern(object):
             raise Exception("Pattern cannot be initialized without siteswap nor beatmap")
 
     def _analyze_pattern_by_siteswap(self, siteswap):
-        try:
-            self.siteswap = siteswap
-            tokens_tree = SSparser.parse(self.siteswap)
-        except Exception as e:
-            self.problems = [PatternProblem(message=repr(e), problematic_beat=-1, kind="parsing_error")]
-        else:
-            self._create_beatmap_from_tokens_tree(tokens_tree)
-            self.highest_throw = self._get_highest_throw()
-            self._set_catches_to_beats()
-            self.problems = debug_pattern(self)
+        self.siteswap = siteswap
+        tokens_tree = SSparser.parse(self.siteswap)
+        self._create_beatmap_from_tokens_tree(tokens_tree)
+        self.highest_throw = self._get_highest_throw()
+        self._set_catches_to_beats()
+        self.problems = debug_pattern(self)
 
     def _analyze_pattern_by_beatmap(self, beatmap):
         self.beatmap = beatmap

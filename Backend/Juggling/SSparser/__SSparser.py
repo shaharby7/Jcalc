@@ -10,6 +10,7 @@ from .__SSlexer import tokens
 from general_utils import read_config
 from .__throwToken import throwToken
 from copy import deepcopy
+from Juggling import JugglingException
 
 SYNTAX_CONFIG = read_config("syntax_config")
 THROW_TYPES = SYNTAX_CONFIG["THROW_TYPES"]
@@ -50,7 +51,7 @@ def p_spatial_throws(p):
 
 
 def p_error(p):
-    raise Exception("Parsing error")
+    raise JugglingException(message="Parsing error", problematic_beat=-1)
 
 
 SSparser = yacc.yacc(debug=True)

@@ -14,7 +14,7 @@ def __get_exceeded_hands_per_beats(pattern, range_of_beats_to_fix):
     for beat_idx, beat in enumerate(pattern.beatmap):
         if not is_beat_in_range(beat_idx, range_of_beats_to_fix):
             continue
-        beat_diff = beat.get_throws_catches_difference(with_catches_after_period=False)
+        beat_diff = beat.get_throws_catches_difference(with_catches_after_period=not(bool(range_of_beats_to_fix)))
         for hand, throws_catches_difference_per_hand in beat_diff.items():
             difference = throws_catches_difference_per_hand[DIFFERENCE]
             if difference != 0:
