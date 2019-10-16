@@ -18,7 +18,7 @@ class TestSuggestValidPattern(AppTestCase):
                 self.assertTrue(len(response.json["problems"]), 0)
             else:
                 raise Exception(
-                    "Jcalc should be able to suggest valid pattern to any siteswap, but {} was failed".format(siteswap))
+                    "Jcalc should be able to suggest valid pattern to any siteswap, but {} has failed".format(siteswap))
 
     @staticmethod
     def _expected_jugglers_amount_problem(expected_problems):

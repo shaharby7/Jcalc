@@ -29,8 +29,10 @@ const getFullUrlPath = (serviceName) => {
 }
 
 const parsePatternJson = (data) => {
-    data.beatmap = JSON.parse(data.beatmap);
-    data.problems = JSON.parse(data.problems);
+    if (data.beatmap && data.problems) {
+        data.beatmap = JSON.parse(data.beatmap);
+        data.problems = JSON.parse(data.problems);
+    }
     return data;
 }
 
@@ -47,8 +49,7 @@ export async function defaultBackendRequest(serviceName, siteswaps) {
     const path = getFullUrlPath(serviceName);
     const query = createQuery(serviceName, siteswaps);
     const response = await axios.post(path, query).catch((err) => {
-        console.log("uhkhkuh");
-        return false;
+        throw err.response.data;
     });
     return await parsePatternJson(response.data);
 };
