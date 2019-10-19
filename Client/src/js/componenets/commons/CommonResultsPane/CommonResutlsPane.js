@@ -11,10 +11,7 @@ import Typography from '@material-ui/core/Typography';
 const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
-        maxWidth: 752,
-    },
-    demo: {
-        backgroundColor: theme.palette.background.paper,
+        maxWidth: 752
     },
     title: {
         margin: theme.spacing(4, 0, 2),
@@ -50,9 +47,10 @@ const createMessagesList = (successMessage, data) => {
 }
 
 const renderMessagesList = (messagesList) => {
+    const classes = useStyles();
     return messagesList.map((messageObject) =>
         <ListItem key={`ListItem for ${messageObject.message}`}>
-            <ListItemAvatar>
+            <ListItemAvatar className={classes.avatar}>
                 <Avatar
                     alt="Remy Sharp"
                     src={messageObject.faviconPath}
@@ -81,7 +79,7 @@ export default function CommonResultsPane(props) {
                     <Typography variant="h6" className={classes.title}>
                         {props.titleText}
                     </Typography>
-                    <div className={classes.demo}>
+                    <div>
                         <List>
                             {renderMessagesList(messagesList)}
                         </List>

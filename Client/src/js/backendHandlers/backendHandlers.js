@@ -14,6 +14,10 @@ const backendConfig = {
         "transactions": {
             "path": "juggling/transactions",
             "params": ["siteswap_1", "siteswap_2"]
+        },
+        "suggestions": {
+            "path": "juggling/suggest_valid_pattern",
+            "params": ["siteswap"]
         }
     }
 }

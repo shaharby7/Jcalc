@@ -1,6 +1,7 @@
 import React from 'react'
 import TransactionsPageForm from './TransactionsPageForm'
 import { defaultBackendRequest } from '../../../backendHandlers/backendHandlers.js'
+import CommonResultsPane from '../../commons/CommonResultsPane/CommonResutlsPane'
 
 export default class TransactionsPage extends (React.Component) {
     constructor(props) {
@@ -14,7 +15,7 @@ export default class TransactionsPage extends (React.Component) {
     setPattern = async (siteswap1, siteswap2) => {
         const pattern = await defaultBackendRequest("transactions",
             [siteswap1, siteswap2]).catch((err) => {
-                this.setState({"BackendErrors":err})
+                this.setState({ "BackendErrors": err })
             });
         this.setState({ "TransactionPattern": pattern });
     };
@@ -23,7 +24,10 @@ export default class TransactionsPage extends (React.Component) {
         return <div>
             <h1>Find transacions between two siteswaps</h1>
             <TransactionsPageForm updatePattern={this.setPattern} />
-            <p>{this.state.TransactionPattern.siteswap}</p>
+            <CommonResultsPane titleText={"Transaction results"}
+                successMessage={this.state.TransactionPattern.siteswap}
+                data={this.state.TransactionPattern}
+            />
         </div>;
     }
 }
