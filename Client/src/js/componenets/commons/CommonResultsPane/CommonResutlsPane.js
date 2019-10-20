@@ -7,6 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import JugglingLabAnimation from '../JugglingLabAnimation/JugglingLabAnimation'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -72,8 +73,18 @@ export default function CommonResultsPane(props) {
     }
     const classes = useStyles();
     const messagesList = createMessagesList(props.successMessage, props.data);
+
+    const renderJugglingLabAnimation = () => {
+        if (props.data.success) {
+            if (props.data.problems.length === 0) {
+                return <JugglingLabAnimation siteswap={props.data.siteswap} />;
+            }
+        };
+        return <div/>
+    }
     return (
         <div className={classes.root}>
+            {renderJugglingLabAnimation()}
             <Grid container spacing={2}>
                 <Grid item xs={12} md={6}>
                     <Typography variant="h6" className={classes.title}>

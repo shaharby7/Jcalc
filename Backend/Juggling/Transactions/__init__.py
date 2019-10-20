@@ -37,4 +37,7 @@ def _create_full_period_patterns(pattern1, pattern2):
 def _assert_patterns_are_valid(pattern1, pattern2):
     for pattern in [pattern1, pattern2]:
         if pattern.problems:
-            raise _JugglingException("Cannot create transaction for invalid pattern - {}".format(pattern.siteswap))
+            exception = _JugglingException(
+                "Cannot create transaction for problematic pattern")
+            exception.set_siteswap(pattern.siteswap)
+            raise exception

@@ -3,7 +3,7 @@ from app.api.__models import pattern_model
 from app.api.__parsers import pattern_request_parser, transaction_request_parser
 
 from flask_restplus import Resource
-from Juggling import Pattern, suggest_valid_pattern, crate_transaction_pattern
+from Juggling import *
 from general_utils import read_config
 
 ROUTES_CONFIG = read_config("routes_config")
@@ -41,7 +41,17 @@ class SuggestionsCollection(Resource):
     @api.marshal_with(pattern_model)
     def post(self):
         args = transaction_request_parser.parse_args()
-        pattern1 = Pattern(args["siteswap_1"])
-        pattern2 = Pattern(args["siteswap_2"])
-        transaction = crate_transaction_pattern(pattern1,pattern2)
+        pattern1, pattern2 = SuggestionsCollection.create_patterns_for_transactions(args)
+        transaction = crate_transaction_pattern(pattern1, pattern2)
         return transaction
+
+    @staticmethod
+    def create_patterns_for_transactions(args):
+        results = []
+        for siteswap in args.values():
+            try:
+                results.append(Pattern(siteswap))
+            except JugglingException as e:
+                e.set_siteswap(siteswap)
+                raise e
+        return results

@@ -19,19 +19,20 @@ export default class AnalyzerPage extends (React.Component) {
 
     hasProblems = () => {
         if (Object.keys(this.state.analyzedPattern).length > 0) {
-            if (Object.keys(this.state.analyzedPattern.problems).length > 0) {
-                return true;
+            if (this.state.analyzedPattern.success) {
+                if (Object.keys(this.state.analyzedPattern.problems).length > 0) {
+                    return true;
+                }
             }
         }
         return false
-
     }
 
     render() {
         return <div>
             <h1>Analyze your pattern!</h1>
             <AnalyzerPageForm updatePattern={this.setPattern} />
-            {this.hasProblems() || (Object.keys(this.state.analyzedPattern).length > 0) ?
+            {this.hasProblems() ?
                 <SuggestionsPane siteswap={this.state.analyzedPattern.siteswap} /> :
                 <div />
             }

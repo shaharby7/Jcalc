@@ -10,7 +10,8 @@ def default_error_handler(e):
     if isinstance(e, JugglingException):
         data = {"success": False,
                 "message": "||".join(e.args),
-                "problematic_beat": e.problematic_beat}
+                "problematic_beat": e.problematic_beat,
+                "siteswap": e.siteswap}
         return data, 200
 
     data = {"message": "||".join(e.args),
