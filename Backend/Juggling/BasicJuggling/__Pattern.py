@@ -17,6 +17,20 @@ HANDS_FOR_JUGGLER = 2
 
 
 class Pattern(object):
+    """
+    logical representation of juggling pattern.
+    An instance of this class can be initiated by pattern, or by a "beatmap" (a list of Beat type instances).
+    It is HIGHLY RECOMMENDED to use only public methods, otherwise sync between the different beats at the beatmap
+    is not promised.
+
+    Main attributes of the class:
+    * siteswap - str siteswap that represent the pattern. If the class is initiated by beatmap or if beatmap has changed
+        as a result of using one of the public methods of an instance SScomposer is being invoked to keep the siteswap
+        and the beatmap compatible.
+    * beatmap - a list of Beat instances, describing the sequence of what throws and what catches should take place
+        at each beat.
+    * problems - list of PatternProblems, describing all logical problems at the pattern.
+    """
 
     def __init__(self, siteswap=None, beatmap=None):
         self._current_hands_state = ["R"]
@@ -27,6 +41,14 @@ class Pattern(object):
         self._analyze_pattern(siteswap, beatmap)
 
     def shift_throw(self, throw_obj, shift_to_beat, shift_to_hand):
+        """
+        Responsible for changing a given throw. gets the current throw, and shift if to the beat and the hand that being
+            requested.
+        :param throw_obj: Throw instance, that is equivalent to the throw that you would like to change.
+        :param shift_to_beat: the new beat you would like to implant
+        :param shift_to_hand: the new hand you would like to implant.
+        :return: None
+        """
         beat_number_of_throw = throw_obj.route_description.beat_number_of_throw
         beat_of_throw = self.beatmap[beat_number_of_throw]
         beat_of_throw.shift_throw(throw_obj, shift_to_beat, shift_to_hand)

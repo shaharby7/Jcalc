@@ -90,6 +90,15 @@ _handlers = {
 
 
 def tokens_handler(throw_token, hand_state, thrower=None, jugglers_amount=None):
+    """
+    The functions recursively disassemble hte token tree created by the SSparser. All Throw objects resulted by the
+        throw_token are returned only after the lowest hierarchy of the token is being disassembled.
+    :param throw_token:
+    :param hand_state:
+    :param thrower:
+    :param jugglers_amount:
+    :return:
+    """
     handler = _handlers[throw_token.throw_type]
     throws, beat_duration, jugglers_amount, implanted_hand_state \
         = handler(throw_token, hand_state, thrower, jugglers_amount)
