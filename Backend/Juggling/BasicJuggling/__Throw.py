@@ -9,6 +9,16 @@ from general_utils import swap_hands, xor, general_class_equality
 
 
 class Throw(object):
+    """
+    Logical representation of any throw at a pattern.
+
+    Main attributes:
+    * src - UniqueHand object describes the hand that threw the ball
+    * dst - UniqueHand object describes the hand that catches the ball
+    * beats - the amount of beats that the ball is going to be in the air
+    * rout_description - RouteDescription objects that contains information about the relations between the throw and
+        the other beats at the pattern. see documentation of RouteDescription for more details.
+    """
 
     def __init__(self, token, thrower_hand, thrower, jugglers_amount):
         self.src = UniqueHand(juggler=(thrower if thrower else 0),
@@ -61,6 +71,13 @@ class Throw(object):
 
 
 class UniqueHand(object):
+    """
+    Logical representation of one of the hands of one of the jugglers.
+    * side - 'L' or 'R'
+    * juggler - int that describes the serial number of the juggler at the pattern
+    * unique - str of "P{}H{}".format(str(juggler), hand)
+    """
+
     def __init__(self, juggler, hand):
         self.side = hand
         self.juggler = int(juggler)
@@ -81,6 +98,16 @@ class UniqueHand(object):
 
 
 class RouteDescription(object):
+    """
+    Objects that contains information about the relations between the throw and the other beats at the pattern
+    * beat_number_of_throw - relative to pattern
+    * beat_number_of_catch - relative to pattern
+    * catch_after_period - set to True only if the catch was of the throw was after a beginning of the patterns from the
+        start. basically that attribute allows you to decide by your self weather you would like to treat the pattern as
+        periodic or only as a one line of throws. Very useful when trying to calculate a transaction or debugging an
+        invalid pattern.
+    """
+
     def __init__(self, beat_number_of_throw, beat_number_of_catch, catch_after_period):
         self.beat_number_of_throw = beat_number_of_throw
         self.beat_number_of_catch = beat_number_of_catch

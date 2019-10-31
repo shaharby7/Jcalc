@@ -1,6 +1,6 @@
 """
 The module is designated to be the core of the backend, and to be responsible for all Juggling calculations.
-* JugglingException - Type of exception that sholud
+
 """
 from .__JugglingException import JugglingException
 from .BasicJuggling import Pattern

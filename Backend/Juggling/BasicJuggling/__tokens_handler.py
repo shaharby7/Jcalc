@@ -93,11 +93,17 @@ def tokens_handler(throw_token, hand_state, thrower=None, jugglers_amount=None):
     """
     The functions recursively disassemble hte token tree created by the SSparser. All Throw objects resulted by the
         throw_token are returned only after the lowest hierarchy of the token is being disassembled.
-    :param throw_token:
-    :param hand_state:
-    :param thrower:
-    :param jugglers_amount:
+    :param throw_token: output of SSparser, or any lower hierarchy of output of SSparser
+    :param hand_state: hand_state of the pattern before throw_token was disassembled
+    :param thrower: if pattern is multi-jugglers the param defines to witch of them the token is relevant.
+    :param jugglers_amount: pretty self-explanatory
     :return:
+        throws - list of Throw objects that represent the throws that are described at the token.
+        beat_duration - usually 1, 2 only at sync patterns
+        jugglers_amount - different than the param jugglers amount if the token defines more jugglers than the param.
+        implanted_hand_state - will be defined in case of strange cases in which the hand sate at the end of beat is not
+            the same as it should be according to the usual rules of the siteswaps (for example, the notation "<L|R|R>" at a
+            passing patten)
     """
     handler = _handlers[throw_token.throw_type]
     throws, beat_duration, jugglers_amount, implanted_hand_state \
