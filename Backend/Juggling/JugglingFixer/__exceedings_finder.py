@@ -4,6 +4,14 @@ from general_utils import is_beat_in_range
 
 
 def find_exceedings(pattern, range_of_beats_to_fix):
+    """
+    Create list of dictionaries, each describes if one of the hands if one of the beats has more or less catches then
+    throws. If the exceeding is positive (has more throws then catches) also "source_throws" are added - list of Throw
+    objects that caused the exceeding.
+    :param pattern: The Pattern object that has exceedings.
+    :param range_of_beats_to_fix: see "suggest_valid_pattern" documentation.
+    :return: exceedings map
+    """
     exceedings = __get_exceeded_hands_per_beats(pattern, range_of_beats_to_fix)
     exceedings_with_sources = __add_source_throws_to_positive_exceedings(exceedings, pattern, range_of_beats_to_fix)
     return exceedings_with_sources

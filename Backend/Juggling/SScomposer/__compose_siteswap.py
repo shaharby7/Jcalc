@@ -6,6 +6,17 @@ THROW_TYPES = SYNTAX_CONFIG["THROW_TYPES"]
 
 
 def compose_siteswap(beatmap):
+    """
+    Designated to do the exact opposite of the SSparser. It gets a beatmap created by Pattern object, and combining a
+    string representing the siteswap of the beatmap according to the siteswap notation rules.
+    Warning! The only only "valid" difference between a given siteswap and the results of
+    compose_siteswap(Pattern(siteswap)) is the "p" notation that notate the catcher serial number in a multi-jugglers
+    pattern. While just a "p" after the number implicitly represents "pass to the next juggler according to the serial
+    number", "compose_siteswap" would always explicitly write to which juggler should catch the throw. For example, if
+    the original siteswap would be "<3p|3p>", the results of compose_siteswap(Pattern(siteswap)) would be "<3p1|3p0>"
+    :param beatmap: beatmap created by pattern.
+    :return: siteswap.
+    """
     siteswap = ""
     for beat in beatmap:
         if beat.is_fake_for_sync:
@@ -16,7 +27,16 @@ def compose_siteswap(beatmap):
 
 
 def __compose_siteswap_for_beat(beat):
+    """
+    The function is responsible to create representation for a beat, for all of it's siteswap hierarchies (basic,
+    multiplex, sync, passing).
+    To understand the way it work's please check the notes at the code itself.
+    :param beat: Beat object
+    :return: str representing a siteswap
+    """
     throws_representation = __create__initial_throws_representation(beat)
+    # throws_representation is actually a list of tuples, each of them has two variables. The first variable of each
+    # tuple is an str representing a part of the beat (or all of it), and the 
     for throw_type in __order_throw_types_by_ss_level():
         throws_representation = __reduce_throws_representation_by_throw_type(throws_representation, throw_type, beat)
         if len(throws_representation) == 1:

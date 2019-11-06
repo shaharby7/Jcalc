@@ -2,6 +2,16 @@ from .__constant_keys import *
 
 
 def create_shifting_map_for_exceedings(exceedings):
+    """
+    Create list of dicts, each describes what throws should be changed and how for the pattern to be fixed. Basically,
+    any positive exceeding (has more throws then catches) should be matched to a negative one. To keep it as similar
+    as possible to the origin pattern the match between the negatives and the positives is done by ordering the
+    both of the lists according to the catching beat, and then matching it by index. That algorithm promises to minimize
+    the L1 hierarchy, and therefore to change as little throws as possible with as little changes as possible at any
+    throw.
+    :param exceedings: see documentation for "find_exceedings" at this package
+    :return: list of dicts, each describes what throws should be changed and how for the pattern to be fixed.
+    """
     ordered_list_of_positive_exceedings = _create_ordered_list_of_positive_exceedings(exceedings)
     ordered_list_of_negative_exceedings = _create_ordered_list_of_negative_exceedings(exceedings)
     shifting_map = [{**ordered_list_of_positive_exceedings[i], **ordered_list_of_negative_exceedings[i]}
